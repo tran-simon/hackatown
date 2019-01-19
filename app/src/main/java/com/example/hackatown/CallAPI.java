@@ -41,7 +41,8 @@ public class CallAPI extends AsyncTask<Request, String, Boolean>
 			urlConnection.connect();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
-		return null;
+		return true;
 	}
 }

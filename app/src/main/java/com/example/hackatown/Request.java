@@ -2,8 +2,9 @@ package com.example.hackatown;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Timestamp;
 import java.util.Date;
-import java.util.StringJoiner;
+import java.util.Locale;
 
 public class Request
 {
@@ -62,7 +63,7 @@ public class Request
     }
 
     String xWwwFormUrlencoded() {
-	    return String.format("type= %s  date=%s position=%s description=%s user_id = %d",
-			    type, date, position, description, user_id);
+	    return String.format(Locale.US, "type=%d&date=%d&position=%f,%f&description=%s&user_id=%d",
+			    type.ordinal(), date.getTime(), position.latitude, position.longitude, description, user_id);
     }
 }
