@@ -136,8 +136,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     {
                         //TODO: L'user a cliqué sur le marker, launch activity
                         Intent intent = new Intent(MapsActivity.this, EventInfoActivity.class);
-                        String string = "";
-                        intent.putExtra("id", string);
+                        int id = 0;
+                        intent.putExtra("id", id);
                         startActivity(intent);
                         break;
                     }
