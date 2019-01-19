@@ -18,12 +18,10 @@
                 android:id="@+id/button_traffic_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft=""
                 android:text="Test"
                 android:paddingLeft="16dp"
                 android:drawablePadding="8dp"
-                android:gravity="left|center_vertical"
-                android:background="@null"/>
+                android:gravity="left|center_vertical" />
         </LinearLayout>
     </ScrollView>
 
