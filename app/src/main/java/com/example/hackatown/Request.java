@@ -1,24 +1,30 @@
-import java.util.Date;
+package com.example.hackatown;
 
-public class Events {
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Date;
+import java.util.StringJoiner;
+
+public class Request
+{
 
     //Paramètre de l'évènement
     public enum EventType {FeuxCiruculation,PanneauxSiganlisation,PanneauxRue,Deneigement,NidDePoule,PoubelleRecup,Stationnement,AbrisBus,Lampadaire,InfSport,Autre}
     private EventType type;
-    private String description;
-    private double latitude;
-    private double longitude;
-    private int eventId;
-    private Date date;
+    private String    description;
+    private LatLng    position;
+    private Date      date;
+    private int       user_id;
+    private int       eventId;
     //private Image image; TODO
 
     //Constructor
-    public Events(EventType type, String description, double latitude, double longitude, Date date /*Image image TODO*/){
+    public Request(EventType type, String description, LatLng position, Date date /*Image image TODO*/, int user_id){
         this.type = type;
         this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.position = position;
         this.date = date;
+        this.user_id = user_id;
         /*this.image = image; TODO*/
     }
 
@@ -39,22 +45,6 @@ public class Events {
         this.description = description;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public int getEventId() {
         return eventId;
     }
@@ -69,5 +59,10 @@ public class Events {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    String xWwwFormUrlencoded() {
+	    return String.format("type= %s  date=%s position=%s description=%s user_id = %d",
+			    type, date, position, description, user_id);
     }
 }
