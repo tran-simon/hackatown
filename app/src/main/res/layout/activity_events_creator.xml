@@ -10,8 +10,12 @@
 
     <Spinner
         android:id="@+id/type_spinner"
-        android:layout_width="200"
-        android:layout_height="wrap_content"
-        android:entries="Feux de circulation" />
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_margin="24"
+        android:background="@drawable/side_nav_bar"
+        android:entries="Feux de circulation"
+        android:popupBackground="@drawable/common_google_signin_btn_icon_dark_normal_background"
+        android:spinnerMode="dialog" />
 
 </LinearLayout>
