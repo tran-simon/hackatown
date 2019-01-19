@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //test
         super.onCreate(savedInstanceState);
+
+        Request rr = new Request(Request.EventType.FeuxCiruculation,"das", new LatLng(4, 5), new Date(), 3);
+		System.out.println("YEEEEEEE");
+        System.out.println(rr.xWwwFormUrlencoded());
 
         setContentView(R.layout.activity_main);
 
