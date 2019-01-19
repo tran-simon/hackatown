@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        Intent intent = new Intent(MainActivity.this, EventsCreatorActivity.class);
         startActivity(intent);
 
         Button button = findViewById(R.id.button);
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                Intent intent = new Intent(MainActivity.this, EventsCreatorActivity.class);
                 startActivity(intent);
 
 

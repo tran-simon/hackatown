@@ -1,3 +1,5 @@
+package com.example.hackatown;
+
 import java.util.Date;
 
 public class Events {

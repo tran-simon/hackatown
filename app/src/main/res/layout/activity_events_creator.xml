@@ -12,18 +12,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
             <Button
                 android:id="@+id/button_traffic_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft=""
-                android:text="Test"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Feu de circulation"
                 android:paddingLeft="16dp"
                 android:drawablePadding="8dp"
                 android:gravity="left|center_vertical"
-                android:background="@null"/>
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_panneau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Panneau de signalisation"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
         </LinearLayout>
     </ScrollView>
 
