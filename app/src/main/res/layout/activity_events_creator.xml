@@ -13,8 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/button_traffic_light"
@@ -37,6 +36,7 @@
                 android:drawablePadding="8dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
+
         </LinearLayout>
     </ScrollView>
 
