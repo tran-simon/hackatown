@@ -194,7 +194,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         URL url2 = null;
         try
         {
-            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".png");
+            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg");
         } catch (MalformedURLException e)
         {
             e.printStackTrace();

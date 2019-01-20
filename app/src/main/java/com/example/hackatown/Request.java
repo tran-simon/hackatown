@@ -1,7 +1,10 @@
 package com.example.hackatown;
 
+import android.net.Uri;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+import java.net.URI;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
@@ -17,6 +20,7 @@ public class Request
     private Date      date;
     private int       user_id;
     private int       eventId;
+	String path;
     //private Image image; TODO
 
 
@@ -25,12 +29,13 @@ public class Request
     }
 
     //Constructor
-    public Request(EventType type, String description, LatLng position, Date date , int user_id){
+    public Request(EventType type, String description, LatLng position, Date date , int user_id, String path){
         this.type = type;
         this.description = description;
         this.position = position;
         this.date = date;
         this.user_id = user_id;
+        this.path = path;
         /*this.image = image; TODO*/
     }
 
