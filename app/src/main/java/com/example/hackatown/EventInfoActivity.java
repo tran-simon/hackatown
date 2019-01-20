@@ -174,7 +174,7 @@ public class EventInfoActivity extends AppCompatActivity {
         URL url2 = null;
         try
         {
-            url2 = new URL("https://dev.concati.me/uploads/1.png");
+            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".png");
         } catch (MalformedURLException e)
         {
             e.printStackTrace();
