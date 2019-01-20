@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Toast;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,6 +53,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
+
 import android.app.AlertDialog;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -67,14 +69,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean location;
 
     private void requestLocation() {
-	    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
     }
 
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-    	location = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-		if (location) {
-			getDeviceLocation();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        location = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        if (location)
+        {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            {
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            getDeviceLocation();
+
 			//Toast.makeText(getApplicationContext(), "Have fun!", Toast.LENGTH_SHORT).show();
 		}
 		else
@@ -116,6 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }
         );
+
 
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
