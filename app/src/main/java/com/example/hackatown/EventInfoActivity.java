@@ -199,18 +199,26 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         {
             e.printStackTrace();
         }
-        ImageDownload imageDownload = new ImageDownload(imageView);
+        ImageDownload imageDownload = new ImageDownload(imageView, new OnDataReceivedListener() {
+            @Override
+            public void OnDataReceived(String data) {
+                findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
+            }
+        });
         imageDownload.execute(url2);
 
 
     }
 
+
     private class ImageDownload extends AsyncTask<URL, Void, Bitmap> {
         private ImageView imageView;
 
-        public ImageDownload(ImageView imageView) {
+        private OnDataReceivedListener listener;
+        public ImageDownload(ImageView imageView, OnDataReceivedListener listener) {
 
             this.imageView = imageView;
+            this.listener = listener;
         }
 
         @Override
@@ -231,6 +239,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             imageView.setImageBitmap(bitmap);
+            listener.OnDataReceived(bitmap.toString());
         }
     }
 }

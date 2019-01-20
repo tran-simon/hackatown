@@ -38,4 +38,14 @@
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         map:title="@string/app_name" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
