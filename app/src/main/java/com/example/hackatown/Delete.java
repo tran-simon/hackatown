@@ -32,6 +32,7 @@ public class Delete extends AsyncTask<Integer, String, Void>
 			dos.writeBytes("id=" + params[0]);
 			dos.close();
 			conn.connect();
+			System.out.println("DELETE " + params[0]);
 			System.out.println(new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine());
 		} catch (final IOException ex) {
 			ex.printStackTrace();

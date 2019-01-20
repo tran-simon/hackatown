@@ -2,8 +2,6 @@ package com.example.hackatown;
 
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +9,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 
 public class CallAPI extends AsyncTask<Request, String, JSONObject>
 {
