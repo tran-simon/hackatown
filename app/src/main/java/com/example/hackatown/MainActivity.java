@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 			    Request rr = new Request(Request.EventType.FeuxCiruculation, "dés", new LatLng(4, 5), new Date(), 3);
 			    System.out.println("YEEEEEEE");
 
-			    new CallAPI().execute(rr);
-				new GetData().execute(-1);
+			    //new CallAPI().execute(rr);
+				//new GetData().execute(-1);
 		    } else {
 		    	System.out.println("NO INTERNET");
 		    }

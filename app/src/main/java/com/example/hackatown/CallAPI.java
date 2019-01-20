@@ -120,7 +120,7 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 			String jsonString = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
 			if (jsonString != null && !jsonString.isEmpty())
 				return new JSONObject(jsonString);
-		} catch (IOException | JSONException ex) {
+		} catch (final IOException | JSONException ex) {
 			System.err.println("Error occurred.");
 			ex.printStackTrace();
 		}

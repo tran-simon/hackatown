@@ -19,6 +19,11 @@ public class Request
     private int       eventId;
     //private Image image; TODO
 
+
+    public Request() {
+
+    }
+
     //Constructor
     public Request(EventType type, String description, LatLng position, Date date , int user_id){
         this.type = type;
