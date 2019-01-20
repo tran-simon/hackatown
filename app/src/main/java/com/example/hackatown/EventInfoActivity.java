@@ -162,10 +162,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         }).execute(user_id);
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").fitCenter().into(imageView);
-
-
-
-
     }
 
 
