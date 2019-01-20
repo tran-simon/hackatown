@@ -1,11 +1,7 @@
 package com.example.hackatown;
 
-import android.net.Uri;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.File;
-import java.net.URI;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
