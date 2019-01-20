@@ -15,6 +15,7 @@ import android.location.Location;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -173,6 +174,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 isOthersSelected = true;
                 editableType.setVisibility(View.VISIBLE);
                 editableType.setEnabled(true);
+                editableType.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 break;
             default:
                 typeDeRequest = null;
