@@ -10,7 +10,7 @@ import java.net.URL;
 public class CallAPI extends AsyncTask<Request, String, String>
 {
 
-	public CallAPI(){
+	public CallAPI() {
 		//set context variables if required
 	}
 
@@ -23,20 +23,20 @@ public class CallAPI extends AsyncTask<Request, String, String>
 	// https://stackoverflow.com/a/16450705
 	@Override
 	protected String doInBackground(final Request... params) {
-		String urlString     = "https://dev.concati.me/data";
-		String fileName      = "image.png";
-		String lineEnd       = "\r\n";
+		final String urlString = "https://dev.concati.me/data",
+				fileName = "image.png",
+				lineEnd       = "\r\n";
 		String twoHyphens    = "--";
 		String boundary      = "end";
 		String sourceFileUri = Environment.getExternalStorageDirectory().getPath() + "/" + fileName;
 		File   sourceFile    = new File(sourceFileUri);
-		int maxBufferSize = 1024*1024;
+		int    maxBufferSize = 1024 * 1024;
 
 		System.out.println("HERE");
 		try {
-			URL               url           = new URL(urlString);
-			FileInputStream fileInputStream = new FileInputStream(sourceFile);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			URL               url             = new URL(urlString);
+			FileInputStream   fileInputStream = new FileInputStream(sourceFile);
+			HttpURLConnection conn            = (HttpURLConnection) url.openConnection();
 
 			conn.setDoInput(true); // Allow Inputs
 			conn.setDoOutput(true); // Allow Outputs
@@ -52,7 +52,6 @@ public class CallAPI extends AsyncTask<Request, String, String>
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 			//DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 			//BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-			System.out.println("NONONONO");
 
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
 			dos.writeBytes("Content-Disposition: form-data; name=\"type\"" + lineEnd);
@@ -97,34 +96,23 @@ public class CallAPI extends AsyncTask<Request, String, String>
 			int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
 			while (bytesRead > 0) {
-
 				dos.write(buffer, 0, bufferSize);
 				bytesAvailable = fileInputStream.available();
-				bufferSize = Math
-						.min(bytesAvailable, maxBufferSize);
-				bytesRead = fileInputStream.read(buffer, 0,
-						bufferSize);
-
+				bufferSize = Math.min(bytesAvailable, maxBufferSize);
+				bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 			}
 
-			// send multipart form data necesssary after file
-			// data...
 			dos.writeBytes(lineEnd);
 			dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
-			// close the streams //
 			fileInputStream.close();
-			//dos.writeBytes(params[0].xWwwFormUrlencoded());
 			dos.flush();
 			dos.close();
 
-			//dos.flush();
-			//dos.close();
-			System.out.println("NONONONO");
 			conn.connect();
 			//System.out.println("MESSAGE DE RETOUR: " + new BufferedReader(new InputStreamReader((conn.getErrorStream()))).readLine());
 			String s = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
-			if (s!= null && !s.isEmpty())
+			if (s != null && !s.isEmpty())
 				return s;
 		} catch (Exception e) {
 			System.out.println("OOPS");
