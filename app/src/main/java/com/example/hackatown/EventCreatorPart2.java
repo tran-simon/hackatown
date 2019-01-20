@@ -28,7 +28,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 //debut
                 Bundle extras = getIntent().getExtras();
                 String typeId = extras.getString("id");
-                Log.d("POLY", "Juliem:" + typeId);
+                Log.d("POLY", "Julien:" + typeId);
                 EditText text = findViewById(R.id.plain_text_input);
                 Request request = new Request( Request.EventType.AbrisBus, text.getText().toString(), new LatLng(0,0), new Date(), 10);
                 Log.d("POLY", "Creation dune request:");
