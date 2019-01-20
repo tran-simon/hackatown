@@ -145,4 +145,3 @@ public class EventsCreatorActivity extends AppCompatActivity {
 
 
 
-

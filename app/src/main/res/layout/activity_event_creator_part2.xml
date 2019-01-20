@@ -33,7 +33,7 @@
         android:drawablePadding="@dimen/text_margin"
         android:gravity="top"
         android:hint="@string/txt_description"
-        android:inputType="textMultiLine"
+        android:inputType="textCapSentences|textMultiLine"
         android:maxLength="120"
         android:scrollHorizontally="false"
         android:singleLine="false"

@@ -34,60 +34,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
     private LatLng position = new LatLng(0, 0);
 
     private boolean imageIsFullscreen = false;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         imageView = findViewById(R.id.imageView);
 
-
-
-
-
-
-        switch (type)
-
-        {
-            case FeuxCiruculation:
-                getSupportActionBar().setTitle(R.string.feu_circulation);
-                break;
-            case PanneauxSignalisation:
-                getSupportActionBar().setTitle(R.string.panneau_signalisation);
-                break;
-            case PanneauxRue:
-                getSupportActionBar().setTitle(R.string.panneau_rue);
-                break;
-            case Deneigement:
-                getSupportActionBar().setTitle(R.string.deneigement);
-                break;
-            case NidDePoule:
-                getSupportActionBar().setTitle(R.string.nid_poule);
-                break;
-            case PoubelleRecup:
-                getSupportActionBar().setTitle(R.string.poubelle);
-                break;
-            case Stationnement:
-                getSupportActionBar().setTitle(R.string.stationnement);
-                break;
-            case AbrisBus:
-                getSupportActionBar().setTitle(R.string.abris_bus);
-                break;
-            case Lampadaire:
-                getSupportActionBar().setTitle(R.string.lampadaire);
-                break;
-            case InfSport:
-                getSupportActionBar().setTitle(R.string.infrastructure_sportive);
-                break;
-            case Autre:
-            default:
-                getSupportActionBar().setTitle(R.string.autre);
-                break;
-        }
 
 
         GetData getData = new GetData(new OnDataReceivedListener() {
@@ -191,11 +146,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
                 break;
         }
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(typeString);
 
         ((TextView) findViewById(R.id.txt_type)).setText(typeString);
         ((TextView) findViewById(R.id.txt_description)).setText(description);
         ((TextView) findViewById(R.id.txt_position)).setText(position.latitude + ":\n" + position.longitude);
         ((TextView) findViewById(R.id.txt_user)).setText(user_id + " ");
+
 
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
