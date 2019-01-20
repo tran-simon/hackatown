@@ -1,11 +1,7 @@
 package com.example.hackatown;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,8 +9,13 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
@@ -116,57 +117,58 @@ public class EventCreatorPart2 extends AppCompatActivity {
             case FeuxCiruculation:
                 typeDeRequest = Request.EventType.FeuxCiruculation;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Feux de circulation");
+                editableType.setText(getText(R.string.feu_circulation));
                 break;
-            case PanneauxSiganlisation:
-                typeDeRequest = Request.EventType.PanneauxSiganlisation;
+            case PanneauxSignalisation:
+                typeDeRequest = Request.EventType.PanneauxSignalisation;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Panneau de signalisation");
+                editableType.setText(getText(R.string.panneau_signalisation));
                 break;
             case PanneauxRue:
                 typeDeRequest = Request.EventType.PanneauxRue;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Panneau de nom de rue");
+                editableType.setText(getText(R.string.panneau_rue));
                 break;
             case Deneigement:
                 typeDeRequest = Request.EventType.Deneigement;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Déneigement");
+                editableType.setText(getText(R.string.deneigement));
                 break;
             case NidDePoule:
                 typeDeRequest = Request.EventType.NidDePoule;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Nid de poule");
+                editableType.setText(getText(R.string.nid_poule));
                 break;
             case PoubelleRecup:
                 typeDeRequest = Request.EventType.PoubelleRecup;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Poubelle/récupération remplie");
+                editableType.setText(getText(R.string.poubelle));
                 break;
             case Stationnement:
                 typeDeRequest = Request.EventType.Stationnement;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Stationnement illégal");
+                editableType.setText(getText(R.string.stationnement));
                 break;
             case Lampadaire:
                 typeDeRequest = Request.EventType.Lampadaire;
-//                editableType.setTextColor(Color.RED);
-//                editableType.setText("Lampadaire");
+                //                editableType.setTextColor(Color.RED);
+                //                editableType.setText("Lampadaire");
                 break;
             case InfSport:
                 typeDeRequest = Request.EventType.InfSport;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Infrastructure sportive");
+                editableType.setText(getText(R.string.infrastructure_sportive));
                 break;
             case AbrisBus:
                 typeDeRequest = Request.EventType.AbrisBus;
                 editableType.setTextColor(Color.RED);
-                editableType.setText("Abrisbus");
+                editableType.setText(getText(R.string.abris_bus));
                 break;
             case Autre:
                 typeDeRequest = Request.EventType.Autre;
                 isOthersSelected = true;
                 editableType.setEnabled(true);
+                editableType.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 break;
             default:
                 typeDeRequest = null;
@@ -181,21 +183,24 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 //debut
                 EditText editableDescription = findViewById(R.id.plain_text_input);
                 String description = editableDescription.getText().toString();
-                if (isOthersSelected)
+                if (mCurrentPhotoPath != null && description != null && !mCurrentPhotoPath.isEmpty() && !description.isEmpty())
                 {
-                    description = "Requête de type : " + editableType.getText().toString() + ". " + description;
-                }
-                Date todaysDate = new Date();
-                int userId = 1;
-                Request request = new Request(typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
-                new CallAPI(new OnDataReceivedListener() {
-                    @Override
-                    public void OnDataReceived(String data) {
-                        Toast.makeText(EventCreatorPart2.this, getString(R.string.msg_sent), Toast.LENGTH_SHORT).show();
-
+                    if (isOthersSelected)
+                    {
+                        description = "Requête de type : " + editableType.getText().toString() + ". " + description;
                     }
-                }).execute(request);
-                EventCreatorPart2.this.finish();
+                    Date todaysDate = new Date();
+                    int userId = 1;
+                    Request request = new Request(typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
+                    new CallAPI(new OnDataReceivedListener() {
+                        @Override
+                        public void OnDataReceived(String data) {
+                            Toast.makeText(EventCreatorPart2.this, getString(R.string.msg_sent), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).execute(request);
+                    EventCreatorPart2.this.finish();
+                }
                 //fin
             }
         });

@@ -3,7 +3,6 @@ package com.example.hackatown;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -16,8 +15,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
 
 public class Marker {
 
@@ -64,7 +61,7 @@ public class Marker {
                 iconID = R.drawable.icon_feu_circulation;
 
                 break;
-            case PanneauxSiganlisation:
+            case PanneauxSignalisation:
                 iconID = R.drawable.icon_signalisation;
                 break;
             case PanneauxRue:

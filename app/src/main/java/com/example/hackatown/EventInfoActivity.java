@@ -10,8 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,62 +34,15 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
     private LatLng position = new LatLng(0, 0);
 
     private boolean imageIsFullscreen = false;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         imageView = findViewById(R.id.imageView);
 
-
-        textView = findViewById(R.id.txt_scrollable);
-
-
-
-
-
-        switch (type)
-
-        {
-            case FeuxCiruculation:
-                getSupportActionBar().setTitle(R.string.feu_circulation);
-                break;
-            case PanneauxSiganlisation:
-                getSupportActionBar().setTitle(R.string.panneau_signalisation);
-                break;
-            case PanneauxRue:
-                getSupportActionBar().setTitle(R.string.panneau_rue);
-                break;
-            case Deneigement:
-                getSupportActionBar().setTitle(R.string.deneigement);
-                break;
-            case NidDePoule:
-                getSupportActionBar().setTitle(R.string.nid_poule);
-                break;
-            case PoubelleRecup:
-                getSupportActionBar().setTitle(R.string.poubelle);
-                break;
-            case Stationnement:
-                getSupportActionBar().setTitle(R.string.stationnement);
-                break;
-            case AbrisBus:
-                getSupportActionBar().setTitle(R.string.abris_bus);
-                break;
-            case Lampadaire:
-                getSupportActionBar().setTitle(R.string.lampadaire);
-                break;
-            case InfSport:
-                getSupportActionBar().setTitle(R.string.infrastructure_sportive);
-                break;
-            case Autre:
-            default:
-                getSupportActionBar().setTitle(R.string.autre);
-                break;
-        }
 
 
         GetData getData = new GetData(new OnDataReceivedListener() {
@@ -155,51 +109,57 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         switch (type)
         {
             case FeuxCiruculation:
-                typeString = "Feux de signalisation";
+                typeString = getString(R.string.feu_circulation);
                 break;
-            case PanneauxSiganlisation:
-                typeString = "Panneau de signalisation";
+            case PanneauxSignalisation:
+                typeString = getString(R.string.panneau_signalisation);
                 break;
             case PanneauxRue:
-                typeString = "Panneau de nom de rue";
+                typeString = getString(R.string.panneau_rue);
                 break;
             case Deneigement:
-                typeString = "Déneigement";
+                typeString = getString(R.string.deneigement);
                 break;
             case NidDePoule:
-                typeString = "Nid de poule";
+                typeString = getString(R.string.nid_poule);
                 break;
             case PoubelleRecup:
-                typeString = "Poubelle/récupération remplie";
+                typeString = getString(R.string.poubelle);
                 break;
             case Stationnement:
-                typeString = "Stationnement illégal";
+                typeString = getString(R.string.stationnement);
                 break;
             case Lampadaire:
-                typeString = "Lampadaire";
+                typeString = getString(R.string.lampadaire);
                 break;
             case InfSport:
-                typeString = "Infrastructure sportive";
+                typeString = getString(R.string.infrastructure_sportive);
                 break;
             case AbrisBus:
-                typeString = "Abrisbus";
+                typeString = getString(R.string.abris_bus);
                 break;
             case Autre:
-                typeString = "Autre";
+                typeString = getString(R.string.autre);
                 break;
             default:
                 typeString = null;
                 break;
         }
-        textView.setText(date + "\n\nType de requête: " + typeString + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\n");
-        textView.setTextColor(Color.GRAY);
-        textView.setTextSize(30);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(typeString);
+
+        ((TextView) findViewById(R.id.txt_type)).setText(typeString);
+        ((TextView) findViewById(R.id.txt_description)).setText(description);
+        ((TextView) findViewById(R.id.txt_position)).setText(position.latitude + ":\n" + position.longitude);
+        textView = ((TextView) findViewById(R.id.txt_user));
+
 
         new User(new OnDataReceivedListener() {
 	        @Override
 	        public void OnDataReceived(String data) {
-	        	textView.setText(textView.getText() + "Émis par " + data);
+	        	textView.setText(textView.getText() + data);
 	        }
         }).execute(user_id);
 

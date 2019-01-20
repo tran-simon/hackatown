@@ -98,7 +98,7 @@
     <string name="deneigement">Snow</string>
     <string name="nid_poule">Pothole</string>
     <string name="poubelle">Trash/Recycling</string>
-    <string name="stationnement">Parking</string>
+    <string name="stationnement">Illegal Parking</string>
     <string name="abris_bus">Bus Shelter</string>
     <string name="lampadaire">Street Light</string>
     <string name="infrastructure_sportive">Sports Infrastructure</string>
@@ -109,4 +109,8 @@
     <string name="txt_description">Add a  short description of the problem</string>
     <string name="msg_sent">Your report has been sent. Thank you!</string>
     <string name="btn_delete">Delete</string>
+    <string name="txt_type">Type: </string>
+    <string name="description">Description:</string>
+    <string name="position">Position (Lat/Lng):</string>
+    <string name="user">User:</string>
 </resources>
