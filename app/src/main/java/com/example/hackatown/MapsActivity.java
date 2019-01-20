@@ -16,7 +16,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -30,19 +33,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap mMap;
     private ArrayList<Marker> markerList = new ArrayList<>();
+    private String info = "";
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Location mLastKnownLocation ;
+    private Location mLastKnownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolBar);
+
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(
@@ -74,18 +88,41 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    public void refresh() {
+        checkPermission();
+        GetData getData = new GetData(new OnDataReceivedListener() {
+            @Override
+            public void OnDataReceived(String data) {
+                info = data;
+                loadData();
+            }
+        });
+        getData.execute(-1);
+    }
+
     /**
      * Permet de loader les données (position des marqueurs...)
      */
     public void loadData() {
+        mMap.clear();
+        try
+        {
+            JSONArray jsonArray = new JSONArray(info);
 
-        //TODO: Change
-        Marker montreal = new Marker(new LatLng(45.50884, -73.58781));
-        Marker terrebonne = new Marker(new LatLng(45.70004, -73.64732));
+            for (int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject object = jsonArray.getJSONObject(i);
+                Marker marker = new Marker(object);
+                markerList.add(marker);
 
 
-        markerList.add(montreal);
-        markerList.add(terrebonne);
+            }
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
         for (Marker marker : markerList)
         {
             mMap.addMarker(marker.getMarkerOption());
@@ -133,7 +170,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setPadding(0, getSupportActionBar().getHeight(),0, 0);
 
+        checkPermission();
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                for (Marker marker1 : markerList)
+                {
+                    if (marker1.getMarkerOption().getPosition().equals(marker.getPosition()))
+                    {
+                        //TODO: L'user a cliqué sur le marker, launch activity
+                        //                        GetData getData = new GetData(MapsActivity.this, EventInfoActivity.class);
+                        //                        getData.execute(marker1.getId());//-1
+                        Intent intent = new Intent(MapsActivity.this, EventInfoActivity.class);
+                        intent.putExtra("id", marker1.getId());
+                        startActivity(intent);
+
+                        break;
+                    }
+                }
+
+                return true;
+            }
+        });
+        getDeviceLocation();
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(45.50884, -73.58781), 10));
+        refresh();
+
+    }
+
+    public void checkPermission(){
+        Log.d("POLY", "checkPermission: ");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
 
         // Permission is not granted
@@ -170,41 +242,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
 
-
-        loadData();
-
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                for (Marker marker1 : markerList)
-                {
-                    if (marker1.getMarkerOption().getPosition().equals(marker.getPosition()))
-                    {
-                        //TODO: L'user a cliqué sur le marker, launch activity
-                        GetData getData = new GetData();
-                        getData.execute(1);//-1
-
-//                        Intent intent = new Intent(MapsActivity.this, EventInfoActivity.class);
-//                        int id = 0;
-//                        intent.putExtra("id", id);
-//                        startActivity(intent);
-                        break;
-                    }
-                }
-
-                return true;
-            }
-        });
-        getDeviceLocation();
-
-
-
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -237,66 +275,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onCameraMove() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.maps_activity_toolbar_menu, menu);
 
+        return true;
     }
 
-
-
-
-    public class GetData extends AsyncTask<Integer, String, String> {
-
-
-
-        // https://stackoverflow.com/a/2938787
-        // https://stackoverflow.com/a/16450705
-        @Override
-        protected String doInBackground(final Integer... params) {
-            URL url;
-            try
-            {
-                String s = "https://dev.concati.me/data";
-                if (params[0] > -1)
-                {
-                    s += "?id=" + params[0];
-                }
-                url = new URL(s);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setReadTimeout(10000 /* milliseconds */);
-                urlConnection.setConnectTimeout(15000 /* milliseconds */);
-                urlConnection.setDoOutput(true);
-                urlConnection.connect();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-
-                String jsonString = br.readLine();
-
-                if (params[0] > -1)
-                {
-                    jsonString = '[' + jsonString + ']';
-                }
-                br.close();
-                System.out.println("JSON: " + jsonString);
-
-                return jsonString;
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO: Parse as list
-
-
-            Intent intent = new Intent(MapsActivity.this, EventInfoActivity.class);
-            intent.putExtra("info", result);
-            startActivity(intent);
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.refresh:
+                refresh();
+                break;
 
         }
+        return super.onOptionsItemSelected(item);
     }
 }

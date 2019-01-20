@@ -1,24 +1,46 @@
 package com.example.hackatown;
 
 
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
 public class Marker {
 
     private MarkerOptions markerOption = new MarkerOptions();
+    private JSONObject info = new JSONObject();
+    private String date = "", description = "";
+    private Request.EventType type = Request.EventType.Autre;
+    private int user_id = 0, id = -1;
 
-    public Marker() {
-        this(Request.EventType.Autre);
+    private LatLng position;
+
+    public Marker(JSONObject info) throws JSONException {
+
+        date = info.getString("date");
+        description = info.getString("description");
+        type = Request.EventType.values()[info.getInt("type")];
+        user_id = info.getInt("user_id");
+
+        String latlng = info.getString("position");
+
+        String positionStrings[] = latlng.split(",");
+
+        position = new LatLng(Double.parseDouble(positionStrings[0]), Double.parseDouble(positionStrings[1]));
+
+        markerOption.position(position);
+        id = info.getInt("id");
+
+        initIcon();
+
     }
-
-    public Marker(Request.EventType type) {
-        //TODO: Definir les images en fonction du type
-        int iconID = 0;
+    public void initIcon(){
+        int iconID = R.mipmap.ic_warning;
         switch (type)
         {
             case FeuxCiruculation:
@@ -44,17 +66,14 @@ public class Marker {
 
             case Autre: default:
             iconID = R.mipmap.ic_warning;
-                    break;
+            break;
         }
 
         setIcon(iconID);
     }
 
 
-    public Marker(LatLng position) {
-        this();
-        setPosition(position);
-    }
+
 
 
     /**
@@ -64,7 +83,6 @@ public class Marker {
      */
     public void setIcon(int id) {
         getMarkerOption().icon(BitmapDescriptorFactory.fromResource(id));
-
     }
 
     public void setPosition(LatLng latLng) {
@@ -87,5 +105,59 @@ public class Marker {
     }
 
 
+    public void setMarkerOption(MarkerOptions markerOption) {
+        this.markerOption = markerOption;
+    }
 
+    public JSONObject getInfo() {
+        return info;
+    }
+
+    public void setInfo(JSONObject info) {
+        this.info = info;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Request.EventType getType() {
+        return type;
+    }
+
+    public void setType(Request.EventType type) {
+        this.type = type;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LatLng getPosition() {
+        return position;
+    }
 }
