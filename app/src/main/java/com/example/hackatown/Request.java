@@ -20,7 +20,7 @@ public class Request
     //private Image image; TODO
 
     //Constructor
-    public Request(EventType type, String description, LatLng position, Date date /*Image image TODO*/, int user_id){
+    public Request(EventType type, String description, LatLng position, Date date , int user_id){
         this.type = type;
         this.description = description;
         this.position = position;
