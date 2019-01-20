@@ -55,8 +55,9 @@ public class Marker {
 
 
 
-    public int getIconId(){
-        int iconID = R.mipmap.ic_warning;
+    public int getIconId(){        
+        int iconID = R.drawable.ic_warning_black_24dp;
+
         switch (type)
         {
             case FeuxCiruculation:
