@@ -26,12 +26,12 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 	@Override
 	protected JSONObject doInBackground(final Request... params) {
 		final String urlString = "https://dev.concati.me/data",
-				fileName = "image.png",
+				fileName = "image.jpg",
 				lineEnd = "\r\n",
 				twoHyphens = "--",
 				boundary = "end",
 				sourceFileUri = Environment.getExternalStorageDirectory().getPath() + "/" + fileName;
-		File sourceFile    = new File(sourceFileUri);
+		File sourceFile    = new File(params[0].path);
 		int  maxBufferSize = 1024 * 1024;
 
 		System.out.println("HERE");

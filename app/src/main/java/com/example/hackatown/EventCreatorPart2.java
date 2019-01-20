@@ -67,7 +67,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.hackatown.fileprovider",
+                        "com.example.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, 1);
@@ -131,9 +131,10 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 String description = editableDescription.getText().toString();
                 Date todaysDate = new Date();
                 int userId = 1;
-                Request request = new Request( typeDeRequest, description, location, todaysDate, userId);
+                Request request = new Request( typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
                 Log.d("POLY", "Creation dune request:");
                 Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : (" + location.latitude + ":" + location.longitude + "), Date: " + todaysDate);
+                new CallAPI().execute(request);
                  //fin
             }
         });
