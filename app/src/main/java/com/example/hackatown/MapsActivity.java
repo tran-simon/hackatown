@@ -127,6 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void loadData() {
 	    markerList.clear();
         mMap.clear();
+        markerList.clear();
         try
         {
             JSONArray jsonArray = new JSONArray(info);
@@ -151,6 +152,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.addMarker(marker.getMarkerOption());
         }
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
     }
 
     private void getDeviceLocation() {

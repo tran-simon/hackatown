@@ -125,6 +125,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
 
     }
 
+
     @Override
     public void OnDataReceived(String data) {
         info = data;
@@ -135,6 +136,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         {
             e.printStackTrace();
         }
+
     }
 
     public void loadData() throws JSONException {
@@ -198,5 +200,42 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         textView.setTypeface(Typeface.DEFAULT_BOLD);
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
+
+
+
+
+    }
+
+
+    private class ImageDownload extends AsyncTask<URL, Void, Bitmap> {
+        private ImageView imageView;
+
+        private OnDataReceivedListener listener;
+        public ImageDownload(ImageView imageView, OnDataReceivedListener listener) {
+
+            this.imageView = imageView;
+            this.listener = listener;
+        }
+
+        @Override
+        protected Bitmap doInBackground(URL... urls) {
+            URL url2 = urls[0];
+            Bitmap bmp = null;
+            try
+            {
+                bmp = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            imageView.setImageBitmap(bitmap);
+            listener.OnDataReceived(bitmap.toString());
+        }
     }
 }
