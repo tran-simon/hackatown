@@ -155,6 +155,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
     public void loadData() throws JSONException {
         objectInfo = new JSONArray(info).getJSONObject(0);
 
+        id = objectInfo.getInt("id");
 
         date = objectInfo.getString("date");
         description = objectInfo.getString("description");
