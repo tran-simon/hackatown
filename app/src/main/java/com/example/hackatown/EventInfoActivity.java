@@ -11,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,8 +46,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         imageView = findViewById(R.id.imageView);
 
 
-        textView = findViewById(R.id.txt_scrollable);
-
 
 
 
@@ -60,7 +56,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
             case FeuxCiruculation:
                 getSupportActionBar().setTitle(R.string.feu_circulation);
                 break;
-            case PanneauxSiganlisation:
+            case PanneauxSignalisation:
                 getSupportActionBar().setTitle(R.string.panneau_signalisation);
                 break;
             case PanneauxRue:
@@ -158,46 +154,49 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         switch (type)
         {
             case FeuxCiruculation:
-                typeString = "Feux de signalisation";
+                typeString = getString(R.string.feu_circulation);
                 break;
-            case PanneauxSiganlisation:
-                typeString = "Panneau de signalisation";
+            case PanneauxSignalisation:
+                typeString = getString(R.string.panneau_signalisation);
                 break;
             case PanneauxRue:
-                typeString = "Panneau de nom de rue";
+                typeString = getString(R.string.panneau_rue);
                 break;
             case Deneigement:
-                typeString = "Déneigement";
+                typeString = getString(R.string.deneigement);
                 break;
             case NidDePoule:
-                typeString = "Nid de poule";
+                typeString = getString(R.string.nid_poule);
                 break;
             case PoubelleRecup:
-                typeString = "Poubelle/récupération remplie";
+                typeString = getString(R.string.poubelle);
                 break;
             case Stationnement:
-                typeString = "Stationnement illégal";
+                typeString = getString(R.string.stationnement);
                 break;
             case Lampadaire:
-                typeString = "Lampadaire";
+                typeString = getString(R.string.lampadaire);
                 break;
             case InfSport:
-                typeString = "Infrastructure sportive";
+                typeString = getString(R.string.infrastructure_sportive);
                 break;
             case AbrisBus:
-                typeString = "Abrisbus";
+                typeString = getString(R.string.abris_bus);
                 break;
             case Autre:
-                typeString = "Autre";
+                typeString = getString(R.string.autre);
                 break;
             default:
                 typeString = null;
                 break;
         }
-        textView.setText(date + "\n\nType de requête: " + typeString + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\nÉmis par " + user_id);
-        textView.setTextColor(Color.GRAY);
-        textView.setTextSize(30);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
+
+
+        ((TextView) findViewById(R.id.txt_type)).setText(typeString);
+        ((TextView) findViewById(R.id.txt_description)).setText(description);
+        ((TextView) findViewById(R.id.txt_position)).setText(position.latitude + ":\n" + position.longitude);
+        ((TextView) findViewById(R.id.txt_user)).setText(user_id + " ");
+
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
 

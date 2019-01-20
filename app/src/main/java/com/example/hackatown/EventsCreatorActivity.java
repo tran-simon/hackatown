@@ -53,7 +53,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Request.EventType eventButton = Request.EventType.PanneauxSiganlisation;
+                final Request.EventType eventButton = Request.EventType.PanneauxSignalisation;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }

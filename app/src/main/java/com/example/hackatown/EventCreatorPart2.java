@@ -1,11 +1,7 @@
 package com.example.hackatown;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +11,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
@@ -118,8 +115,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 editableType.setTextColor(Color.RED);
                 editableType.setText("Feux de circulation");
                 break;
-            case PanneauxSiganlisation:
-                typeDeRequest = Request.EventType.PanneauxSiganlisation;
+            case PanneauxSignalisation:
+                typeDeRequest = Request.EventType.PanneauxSignalisation;
                 editableType.setTextColor(Color.RED);
                 editableType.setText("Panneau de signalisation");
                 break;
@@ -150,8 +147,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 break;
             case Lampadaire:
                 typeDeRequest = Request.EventType.Lampadaire;
-//                editableType.setTextColor(Color.RED);
-//                editableType.setText("Lampadaire");
+                //                editableType.setTextColor(Color.RED);
+                //                editableType.setText("Lampadaire");
                 break;
             case InfSport:
                 typeDeRequest = Request.EventType.InfSport;
@@ -181,21 +178,24 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 //debut
                 EditText editableDescription = findViewById(R.id.plain_text_input);
                 String description = editableDescription.getText().toString();
-                if (isOthersSelected)
+                if (mCurrentPhotoPath != null && description != null && !mCurrentPhotoPath.isEmpty() && !description.isEmpty())
                 {
-                    description = "Requête de type : " + editableType.getText().toString() + ". " + description;
-                }
-                Date todaysDate = new Date();
-                int userId = 1;
-                Request request = new Request(typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
-                new CallAPI(new OnDataReceivedListener() {
-                    @Override
-                    public void OnDataReceived(String data) {
-                        Toast.makeText(EventCreatorPart2.this, getString(R.string.msg_sent), Toast.LENGTH_SHORT).show();
-
+                    if (isOthersSelected)
+                    {
+                        description = "Requête de type : " + editableType.getText().toString() + ". " + description;
                     }
-                }).execute(request);
-                EventCreatorPart2.this.finish();
+                    Date todaysDate = new Date();
+                    int userId = 1;
+                    Request request = new Request(typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
+                    new CallAPI(new OnDataReceivedListener() {
+                        @Override
+                        public void OnDataReceived(String data) {
+                            Toast.makeText(EventCreatorPart2.this, getString(R.string.msg_sent), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).execute(request);
+                    EventCreatorPart2.this.finish();
+                }
                 //fin
             }
         });

@@ -13,7 +13,7 @@ public class Request
 {
 
     //Paramètre de l'évènement
-    public enum EventType {FeuxCiruculation,PanneauxSiganlisation,PanneauxRue,Deneigement,NidDePoule,PoubelleRecup,Stationnement,AbrisBus,Lampadaire,InfSport,Autre}
+    public enum EventType {FeuxCiruculation, PanneauxSignalisation,PanneauxRue,Deneigement,NidDePoule,PoubelleRecup,Stationnement,AbrisBus,Lampadaire,InfSport,Autre}
     private EventType type;
     private String    description;
     private LatLng    position;
