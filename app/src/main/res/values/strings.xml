@@ -108,4 +108,5 @@
     <string name="txt_event_name">Event Name</string>
     <string name="txt_description">Add a  short description of the problem</string>
     <string name="msg_sent">Your report has been sent. Thank you!</string>
+    <string name="btn_delete">Delete</string>
 </resources>

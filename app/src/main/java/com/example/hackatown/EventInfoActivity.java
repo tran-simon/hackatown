@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -120,6 +121,18 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
             }
         });
         getData.execute(getIntent().getIntExtra("id", 0));
+
+
+        Button delete = findViewById(R.id.btn_delete);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Delete().execute(id);
+                finish();
+            }
+        });
 
 
 
