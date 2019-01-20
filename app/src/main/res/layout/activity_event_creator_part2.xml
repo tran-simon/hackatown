@@ -61,6 +61,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="96dp"
+        android:padding="8dp"
         android:background="@color/colorAccent"
         android:text="Envoyer une requête"
         android:textColor="#ffffff"

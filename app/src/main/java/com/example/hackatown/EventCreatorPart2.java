@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -95,6 +96,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
             default: typeDeRequest = null;
                 break;
         }
+
 
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
