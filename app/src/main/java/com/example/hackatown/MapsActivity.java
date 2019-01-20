@@ -62,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location mLastKnownLocation;
+    private FloatingActionButton fab;
 
     private boolean location;
 
@@ -74,7 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     	location = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
 		if (location) {
 			getDeviceLocation();
-			Toast.makeText(getApplicationContext(), "Have fun!", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Have fun!", Toast.LENGTH_SHORT).show();
 		}
 		else
 			new AlertDialog.Builder(this)
@@ -122,6 +123,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void refresh() {
+        getDeviceLocation();
         GetData getData = new GetData(new OnDataReceivedListener() {
             @Override
             public void OnDataReceived(String data) {

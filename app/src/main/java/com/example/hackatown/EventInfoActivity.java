@@ -3,6 +3,8 @@ package com.example.hackatown;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -188,8 +190,10 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         position = new LatLng(Double.parseDouble(positionStrings[0]), Double.parseDouble(positionStrings[1]));
 
 
-        textView.setText("Date: " + date + "\nDescription: " + description + "\nPosition (lat, long): (" + position.latitude + ":" + position.longitude + ")\nUser: " + user_id);
-
+        textView.setText(date + "\n\nType de requête: " + type + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\nÉmis par " + user_id);
+        textView.setTextColor(Color.GRAY);
+        textView.setTextSize(30);
+        textView.setTypeface(Typeface.DEFAULT_BOLD);
 
         URL url2 = null;
         try
