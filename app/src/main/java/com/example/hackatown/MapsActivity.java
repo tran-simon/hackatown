@@ -94,9 +94,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void OnDataReceived(String data) {
                 info = data;
                 loadData();
+                findViewById(R.id.progressBar2).setVisibility(View.INVISIBLE);
             }
         });
+
         getData.execute(-1);
+        findViewById(R.id.progressBar2).setVisibility(View.VISIBLE);
     }
 
     /**
