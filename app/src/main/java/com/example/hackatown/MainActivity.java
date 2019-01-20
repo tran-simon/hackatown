@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = new Intent(MainActivity.this, EventsCreatorActivity.class);
-
         startActivity(intent);
 
         Button button = findViewById(R.id.button);
