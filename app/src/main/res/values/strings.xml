@@ -98,7 +98,7 @@
     <string name="deneigement">Snow</string>
     <string name="nid_poule">Pothole</string>
     <string name="poubelle">Trash/Recycling</string>
-    <string name="stationnement">Parking</string>
+    <string name="stationnement">Illegal Parking</string>
     <string name="abris_bus">Bus Shelter</string>
     <string name="lampadaire">Street Light</string>
     <string name="infrastructure_sportive">Sports Infrastructure</string>

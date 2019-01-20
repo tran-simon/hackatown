@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toolbar;
 
 public class EventsCreatorActivity extends AppCompatActivity {
 
@@ -25,6 +24,10 @@ public class EventsCreatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_events_creator);
+        this.setTitle("Événement");
+
 
         final Button button1 = findViewById(R.id.button_feu_circulation);
         final Button button2 = findViewById(R.id.button_panneau);
@@ -138,7 +141,6 @@ public class EventsCreatorActivity extends AppCompatActivity {
         });
     }
 }
-
 
 
 
