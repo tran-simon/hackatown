@@ -2,7 +2,7 @@ package com.example.hackatown;
 
 import android.os.AsyncTask;
 import android.os.Environment;
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -120,9 +120,9 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 			String jsonString = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
 			if (jsonString != null && !jsonString.isEmpty())
 				return new JSONObject(jsonString);
-		} catch (Exception e) {
-			System.out.println("OOPS");
-			e.printStackTrace();
+		} catch (final IOException | JSONException ex) {
+			System.err.println("Error occurred.");
+			ex.printStackTrace();
 		}
 		return null;
 	}
