@@ -30,7 +30,7 @@
                 android:contentDescription="Image"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                app:srcCompat="@mipmap/img_nid_poule_foreground" />
+                app:srcCompat="@color/colorPrimary" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

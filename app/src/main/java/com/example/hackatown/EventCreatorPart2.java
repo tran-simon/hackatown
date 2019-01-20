@@ -142,8 +142,11 @@ public class EventCreatorPart2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //debut
-                dispatchTakePictureIntent();
-
+                try {
+                    dispatchTakePictureIntent();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 //fin
             }
         });
