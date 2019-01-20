@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -20,16 +21,18 @@ public class EventCreatorPart2 extends AppCompatActivity {
 
         //Parametre
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
-        Button insertImgBtn = findViewById(R.id.insertImgBtn);
-        final TextInputEditText eventDescription = findViewById(R.id.eventDescription);
 
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //debut
-            Request request = new Request( Request.EventType.AbrisBus, eventDescription.getFontFeatureSettings(), new LatLng(0,0), new Date(), 10);
-            Log.d("POLY", Request.EventType.AbrisBus + eventDescription.getFontFeatureSettings() + new LatLng(0,0) + new Date());
-            //fin
+                Bundle extras = getIntent().getExtras();
+                String typeId = extras.getString("id");
+                EditText text = findViewById(R.id.plain_text_input);
+                Request request = new Request( Request.EventType.AbrisBus, text.getText().toString(), new LatLng(0,0), new Date(), 10);
+                Log.d("POLY", "Creation dune request:");
+                Log.d("POLY", Request.EventType.AbrisBus + text.getText().toString() + new LatLng(0,0) + new Date());
+                 //fin
             }
         });
     }
