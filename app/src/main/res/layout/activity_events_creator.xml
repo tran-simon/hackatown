@@ -67,7 +67,7 @@
                 android:id="@+id/button_nid_poule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:drawableLeft="@drawable/icon_nid_poule"
                 android:text="Nid de poule"
                 android:textSize="16sp"
                 android:paddingLeft="16dp"
