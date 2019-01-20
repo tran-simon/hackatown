@@ -44,7 +44,7 @@ public class Marker {
 
     }
     public void initIcon(){
-        int iconID = R.mipmap.ic_warning;
+        int iconID = R.mipmap.img_nid_poule;
         switch (type)
         {
             case FeuxCiruculation:
@@ -69,7 +69,7 @@ public class Marker {
                 break;
 
             case Autre: default:
-            iconID = R.mipmap.ic_warning;
+//            iconID = R.mipmap.ic_warning;
             break;
         }
 
