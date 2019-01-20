@@ -29,8 +29,10 @@ public class EventCreatorPart2 extends AppCompatActivity {
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
         Bundle extras = getIntent().getExtras();
         TextView title = findViewById(R.id.EventName);
-        String idType = extras.getString("id");
+        String idType = extras.getString("type");
         final Request.EventType typeDeRequest;
+        String locationStrings[] = getIntent().getStringExtra("position").split(",");
+        LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
 
         //Définir le type de l'event
         switch (idType) {
@@ -71,12 +73,9 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 int userId = 1;
                 Request request = new Request( typeDeRequest, description, presentPosition, todaysDate, userId);
                 Log.d("POLY", "Creation dune request:");
-                Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : " + presentPosition + ", Date: " + todaysDate);
+                Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : (" + location.latitude + ":" + location.longitude + "), Date: " + todaysDate);
                  //fin
             }
         });
-        String locationStrings[] = getIntent().getStringExtra("position").split(",");
-
-        LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
     }
 }
