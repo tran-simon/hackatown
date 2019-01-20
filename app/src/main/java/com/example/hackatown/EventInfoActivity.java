@@ -41,7 +41,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
 
     private String date = "", description = "";
-    private Events.EventType type = Events.EventType.Autre;
+    private Request.EventType type = Request.EventType.Autre;
     private int id = 0, user_id = 0;
     private LatLng position = new LatLng(0, 0);
 
@@ -97,7 +97,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
+        info = intent.getStringExtra("info");
 
 
         try
@@ -111,10 +111,10 @@ public class EventInfoActivity extends AppCompatActivity {
         switch (type)
 
         {
-            case FeuxCirculation:
+            case FeuxCiruculation:
                 getSupportActionBar().setTitle(R.string.feu_circulation);
                 break;
-            case PanneauxSignalisation:
+            case PanneauxSiganlisation:
                 getSupportActionBar().setTitle(R.string.panneau_signalisation);
                 break;
             case PanneauxRue:
@@ -149,45 +149,16 @@ public class EventInfoActivity extends AppCompatActivity {
 
     }
 
-    public static JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException {
-        HttpURLConnection urlConnection = null;
-        URL url = new URL(urlString);
-        urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setReadTimeout(10000 /* milliseconds */);
-        urlConnection.setConnectTimeout(15000 /* milliseconds */);
-        urlConnection.setDoOutput(true);
-        urlConnection.connect();
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        while ((line = br.readLine()) != null)
-        {
-            sb.append(line + "\n");
-        }
-        br.close();
-
-        String jsonString = sb.toString();
-        System.out.println("JSON: " + jsonString);
-
-        return new JSONObject(jsonString);
-    }
 
     public void loadData() throws JSONException {
-
-
-        String url = "https://dev.concati.me/data?=" + id;
-
-
-        info = "[{\"date\":\"Sat, 19 Jan 2019 20:44:52 GMT\",\"description\":\"\\u00c9cole \\u00e0 r\\u00e9nover\",\"id\":1,\"position\":\"45.504384,-73.6150716\",\"type\":1,\"user_id\":1}]\n";//TODO
+        Log.d("POLY", "loadData:  " + info);
 
         objectInfo = new JSONArray(info).getJSONObject(0);
 
+
         date = objectInfo.getString("date");
         description = objectInfo.getString("description");
-        type = Events.EventType.values()[objectInfo.getInt("type")];
+        type = Request.EventType.values()[objectInfo.getInt("type")];
         user_id = objectInfo.getInt("user_id");
 
         String latlng = objectInfo.getString("position");

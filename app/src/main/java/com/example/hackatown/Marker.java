@@ -13,17 +13,17 @@ public class Marker {
     private MarkerOptions markerOption = new MarkerOptions();
 
     public Marker() {
-        this(Events.EventType.Autre);
+        this(Request.EventType.Autre);
     }
 
-    public Marker(Events.EventType type) {
+    public Marker(Request.EventType type) {
         //TODO: Definir les images en fonction du type
         int iconID = 0;
         switch (type)
         {
-            case FeuxCirculation:
+            case FeuxCiruculation:
                 break;
-            case PanneauxSignalisation:
+            case PanneauxSiganlisation:
                 break;
             case PanneauxRue:
                 break;

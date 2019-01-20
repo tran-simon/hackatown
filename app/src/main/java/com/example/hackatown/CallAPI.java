@@ -2,15 +2,17 @@ package com.example.hackatown;
 
 import android.os.AsyncTask;
 import android.os.Environment;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CallAPI extends AsyncTask<Request, String, String>
+public class CallAPI extends AsyncTask<Request, String, JSONObject>
 {
 
-	public CallAPI(){
+	public CallAPI() {
 		//set context variables if required
 	}
 
@@ -22,37 +24,35 @@ public class CallAPI extends AsyncTask<Request, String, String>
 	// https://stackoverflow.com/a/2938787
 	// https://stackoverflow.com/a/16450705
 	@Override
-	protected String doInBackground(final Request... params) {
-		String urlString     = "https://dev.concati.me/data";
-		String fileName      = "image.png";
-		String lineEnd       = "\r\n";
-		String twoHyphens    = "--";
-		String boundary      = "end";
-		String sourceFileUri = Environment.getExternalStorageDirectory().getPath() + "/" + fileName;
-		File   sourceFile    = new File(sourceFileUri);
-		int maxBufferSize = 1024*1024;
+	protected JSONObject doInBackground(final Request... params) {
+		final String urlString = "https://dev.concati.me/data",
+				fileName = "image.png",
+				lineEnd = "\r\n",
+				twoHyphens = "--",
+				boundary = "end",
+				sourceFileUri = Environment.getExternalStorageDirectory().getPath() + "/" + fileName;
+		File sourceFile    = new File(sourceFileUri);
+		int  maxBufferSize = 1024 * 1024;
 
 		System.out.println("HERE");
 		try {
-			URL               url           = new URL(urlString);
-			FileInputStream fileInputStream = new FileInputStream(sourceFile);
+			URL               url  = new URL(urlString);
+			FileInputStream   fis  = new FileInputStream(sourceFile);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setDoInput(true); // Allow Inputs
 			conn.setDoOutput(true); // Allow Outputs
 			conn.setUseCaches(false); // Don't use cache
-			System.out.println("NONONONO");
 
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Connection", "Keep-Alive");
-			conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+			//conn.setRequestProperty("ENCTYPE", "multipart/form-data");
 			conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-			conn.setRequestProperty("image", fileName);
+			//conn.setRequestProperty("image", fileName);
 
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 			//DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
 			//BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-			System.out.println("NONONONO");
 
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
 			dos.writeBytes("Content-Disposition: form-data; name=\"type\"" + lineEnd);
@@ -86,50 +86,50 @@ public class CallAPI extends AsyncTask<Request, String, String>
 			//dos.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
 			dos.writeBytes(lineEnd);
 
-			// create a buffer of maximum size
-			int bytesAvailable = fileInputStream.available();
-
+			int bytesAvailable = fis.available();
 			int bufferSize = Math.min(bytesAvailable, maxBufferSize);
-
 			byte[] buffer = new byte[bufferSize];
-
-			// read file and write it into form...
-			int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
+			int bytesRead = fis.read(buffer, 0, bufferSize);
 			while (bytesRead > 0) {
-
 				dos.write(buffer, 0, bufferSize);
-				bytesAvailable = fileInputStream.available();
-				bufferSize = Math
-						.min(bytesAvailable, maxBufferSize);
-				bytesRead = fileInputStream.read(buffer, 0,
-						bufferSize);
-
+				bytesAvailable = fis.available();
+				bufferSize = Math.min(bytesAvailable, maxBufferSize);
+				bytesRead = fis.read(buffer, 0, bufferSize);
 			}
+			/*
+			TODO: Improve
+			int bytesRead, bytesAvailable, bufferSize;
+			byte[] buffer;
+			do {
+				bytesAvailable = fis.available();
+				bufferSize = Math.min(bytesAvailable, maxBufferSize);
+				buffer = new byte[bufferSize];
+				dos.write(buffer, 0, bufferSize);
+				bytesRead = fis.read(buffer, 0, bufferSize);
+			} while(bytesRead > 0);*/
 
-			// send multipart form data necesssary after file
-			// data...
 			dos.writeBytes(lineEnd);
 			dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
-			// close the streams //
-			fileInputStream.close();
-			//dos.writeBytes(params[0].xWwwFormUrlencoded());
 			dos.flush();
 			dos.close();
+			fis.close();
 
-			//dos.flush();
-			//dos.close();
-			System.out.println("NONONONO");
 			conn.connect();
 			//System.out.println("MESSAGE DE RETOUR: " + new BufferedReader(new InputStreamReader((conn.getErrorStream()))).readLine());
-			String s = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
-			if (s!= null && !s.isEmpty())
-				return s;
+			String jsonString = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
+			if (jsonString != null && !jsonString.isEmpty())
+				return new JSONObject(jsonString);
 		} catch (Exception e) {
 			System.out.println("OOPS");
 			e.printStackTrace();
 		}
-		return "";
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(JSONObject result) {
+		// TODO: Parse as list
+
 	}
 }
