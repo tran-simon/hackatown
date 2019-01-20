@@ -52,6 +52,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location mLastKnownLocation;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +68,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(toolBar);
 
 
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab = findViewById(R.id.floatingActionButton);
+        fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MapsActivity.this, EventsCreatorActivity.class);
-                        getDeviceLocation();
                         String locationString = mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude();
                         intent.putExtra("position", locationString);
                         startActivity(intent);
@@ -89,6 +90,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void refresh() {
         checkPermission();
+        getDeviceLocation();
         GetData getData = new GetData(new OnDataReceivedListener() {
             @Override
             public void OnDataReceived(String data) {
@@ -207,7 +209,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void checkPermission(){
-        Log.d("POLY", "checkPermission: ");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
 
         // Permission is not granted
@@ -233,15 +234,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                         0);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
+
         }
         else
         {
             // Permission has already been granted
             mMap.setMyLocationEnabled(true);
+            fab.setVisibility(View.VISIBLE);
         }
 
     }

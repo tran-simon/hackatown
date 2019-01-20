@@ -4,10 +4,12 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.location.Location;
 import android.support.v4.content.FileProvider;
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class EventCreatorPart2 extends AppCompatActivity {
 
+    private final int REQUEST_PICTURE = 324;
     //Truc pour la photo
     String mCurrentPhotoPath;
     private File createImageFile() {
@@ -70,7 +73,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
                         "com.example.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 1);
+                startActivityForResult(takePictureIntent, REQUEST_PICTURE);
                 System.out.println("YESS");
             }
         } else {
@@ -81,6 +84,16 @@ public class EventCreatorPart2 extends AppCompatActivity {
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_PICTURE && resultCode == RESULT_OK && data != null)
+        {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_creator_part2);
@@ -88,6 +101,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
         //Parametre
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
         ImageButton takePicture = findViewById(R.id.insertImgBtn);
+
+
         Bundle extras = getIntent().getExtras();
         TextView title = findViewById(R.id.EventName);
         Request.EventType type = Request.EventType.values()[getIntent().getIntExtra("type", 0)] ;
