@@ -1,38 +1,26 @@
 package com.example.hackatown;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.android.gms.common.api.Response;
 import com.google.android.gms.maps.model.LatLng;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class EventInfoActivity extends AppCompatActivity implements OnDataReceivedListener {
@@ -122,6 +110,18 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         getData.execute(getIntent().getIntExtra("id", 0));
 
 
+        Button delete = findViewById(R.id.btn_delete);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+				Log.d("DELETE IT", ""+id);
+                new Delete().execute(id);
+                finish();
+            }
+        });
+
+
 
     }
 
@@ -142,6 +142,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
     public void loadData() throws JSONException {
         objectInfo = new JSONArray(info).getJSONObject(0);
 
+        id = objectInfo.getInt("id");
 
         date = objectInfo.getString("date");
         description = objectInfo.getString("description");
@@ -153,28 +154,54 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         String positionStrings[] = latlng.split(",");
 
         position = new LatLng(Double.parseDouble(positionStrings[0]), Double.parseDouble(positionStrings[1]));
-
-
-        textView.setText(date + "\n\nType de requête: " + type + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\nÉmis par " + user_id);
+        String typeString = null;
+        switch (type)
+        {
+            case FeuxCiruculation:
+                typeString = "Feux de signalisation";
+                break;
+            case PanneauxSiganlisation:
+                typeString = "Panneau de signalisation";
+                break;
+            case PanneauxRue:
+                typeString = "Panneau de nom de rue";
+                break;
+            case Deneigement:
+                typeString = "Déneigement";
+                break;
+            case NidDePoule:
+                typeString = "Nid de poule";
+                break;
+            case PoubelleRecup:
+                typeString = "Poubelle/récupération remplie";
+                break;
+            case Stationnement:
+                typeString = "Stationnement illégal";
+                break;
+            case Lampadaire:
+                typeString = "Lampadaire";
+                break;
+            case InfSport:
+                typeString = "Infrastructure sportive";
+                break;
+            case AbrisBus:
+                typeString = "Abrisbus";
+                break;
+            case Autre:
+                typeString = "Autre";
+                break;
+            default:
+                typeString = null;
+                break;
+        }
+        textView.setText(date + "\n\nType de requête: " + typeString + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\nÉmis par " + user_id);
         textView.setTextColor(Color.GRAY);
         textView.setTextSize(30);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
 
-        URL url2 = null;
-        try
-        {
-            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg");
-        } catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        ImageDownload imageDownload = new ImageDownload(imageView, new OnDataReceivedListener() {
-            @Override
-            public void OnDataReceived(String data) {
-                findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
-            }
-        });
-        imageDownload.execute(url2);
+	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
+
+
 
 
     }

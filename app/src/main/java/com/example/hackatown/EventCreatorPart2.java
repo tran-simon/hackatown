@@ -1,30 +1,21 @@
 package com.example.hackatown;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.text.SimpleDateFormat;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.location.Location;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -112,12 +103,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
         //Parametre
         Button sendRequestBtn = findViewById(R.id.btn_send);
         imageView2 = findViewById(R.id.imageView2);
-
-
-//        ActionBar toolbar = getSupportActionBar();
-
         TextView editableType = findViewById(R.id.EventName);
-        editableType.setVisibility(View.INVISIBLE);
+        editableType.setEnabled(false);
 
         Bundle extras = getIntent().getExtras();
         Request.EventType type = Request.EventType.values()[getIntent().getIntExtra("type", 0)];
@@ -130,49 +117,57 @@ public class EventCreatorPart2 extends AppCompatActivity {
         {
             case FeuxCiruculation:
                 typeDeRequest = Request.EventType.FeuxCiruculation;
-//                toolbar.setTitle(R.string.feu_circulation);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Feux de circulation");
                 break;
             case PanneauxSiganlisation:
                 typeDeRequest = Request.EventType.PanneauxSiganlisation;
-//                toolbar.setTitle(R.string.panneau_signalisation);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Panneau de signalisation");
                 break;
             case PanneauxRue:
                 typeDeRequest = Request.EventType.PanneauxRue;
-//                toolbar.setTitle(R.string.panneau_rue);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Panneau de nom de rue");
                 break;
             case Deneigement:
                 typeDeRequest = Request.EventType.Deneigement;
-//                toolbar.setTitle(R.string.deneigement);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Déneigement");
                 break;
             case NidDePoule:
                 typeDeRequest = Request.EventType.NidDePoule;
-//                toolbar.setTitle(R.string.nid_poule);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Nid de poule");
                 break;
             case PoubelleRecup:
                 typeDeRequest = Request.EventType.PoubelleRecup;
-//                toolbar.setTitle(R.string.poubelle);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Poubelle/récupération remplie");
                 break;
             case Stationnement:
                 typeDeRequest = Request.EventType.Stationnement;
-//                toolbar.setTitle(R.string.stationnement);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Stationnement illégal");
                 break;
             case Lampadaire:
                 typeDeRequest = Request.EventType.Lampadaire;
-//                toolbar.setTitle(R.string.lampadaire);
+//                editableType.setTextColor(Color.RED);
+//                editableType.setText("Lampadaire");
                 break;
             case InfSport:
                 typeDeRequest = Request.EventType.InfSport;
-//                toolbar.setTitle(R.string.infrastructure_sportive);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Infrastructure sportive");
                 break;
             case AbrisBus:
                 typeDeRequest = Request.EventType.AbrisBus;
-//                toolbar.setTitle(R.string.abris_bus);
+                editableType.setTextColor(Color.RED);
+                editableType.setText("Abrisbus");
                 break;
             case Autre:
                 typeDeRequest = Request.EventType.Autre;
-//                toolbar.setTitle(R.string.autre);
                 isOthersSelected = true;
-                editableType.setVisibility(View.VISIBLE);
                 editableType.setEnabled(true);
                 editableType.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 break;
