@@ -31,6 +31,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
         TextView title = findViewById(R.id.EventName);
         String idType = extras.getString("id");
         final Request.EventType typeDeRequest;
+        String locationStrings[] = getIntent().getStringExtra("position").split(",");
+        LatLng presentPosition = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
 
         //Définir le type de l'event
         switch (idType) {
@@ -66,7 +68,6 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 //debut
                 EditText editableDescription = findViewById(R.id.plain_text_input);
                 String description = editableDescription.getText().toString();
-                LatLng presentPosition = new LatLng(0,0);
                 Date todaysDate = new Date();
                 int userId = 1;
                 Request request = new Request( typeDeRequest, description, presentPosition, todaysDate, userId);
@@ -75,8 +76,6 @@ public class EventCreatorPart2 extends AppCompatActivity {
                  //fin
             }
         });
-        String locationStrings[] = getIntent().getStringExtra("position").split(",");
 
-        LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
     }
 }
