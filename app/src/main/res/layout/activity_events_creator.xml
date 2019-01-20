@@ -22,8 +22,9 @@
                 android:drawableLeft="@drawable/icon_feu_circulation"
                 android:text="Feu de circulation"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff" />
 
@@ -35,7 +36,8 @@
                 android:text="Panneau de signalisation"
                 android:paddingLeft="16dp"
                 android:textSize="16sp"
-                android:drawablePadding="8dp"
+                android:textAllCaps="false"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -46,8 +48,9 @@
                 android:drawableLeft="@drawable/icon_rue"
                 android:text="Panneau de nom de rue"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -58,8 +61,9 @@
                 android:drawableLeft="@drawable/icon_deneigement"
                 android:text="Déneigement"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -70,8 +74,9 @@
                 android:drawableLeft="@drawable/icon_nid_poule"
                 android:text="Nid de poule"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -82,8 +87,9 @@
                 android:drawableLeft="@drawable/icon_poubelle"
                 android:text="Poubelle/Récupération remplie"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -94,8 +100,9 @@
                 android:drawableLeft="@drawable/icon_stationnement"
                 android:text="Stationnement illégal"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -106,8 +113,9 @@
                 android:drawableLeft="@drawable/icon_lampadaire"
                 android:text="Lampadaire"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -118,8 +126,9 @@
                 android:drawableLeft="@drawable/icon_infrastructure_sportive"
                 android:text="Infrastructure sportive"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -130,8 +139,9 @@
                 android:drawableLeft="@drawable/icon_abribus"
                 android:text="Abribus"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
 
@@ -142,12 +152,11 @@
                 android:drawableLeft="@drawable/ic_warning_black_24dp"
                 android:text="Autre"
                 android:textSize="16sp"
+                android:textAllCaps="false"
                 android:paddingLeft="16dp"
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:gravity="left|center_vertical"
                 android:background="#ffffff"/>
-
-
 
         </LinearLayout>
     </ScrollView>
