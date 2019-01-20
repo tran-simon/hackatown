@@ -4,7 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         setContentView(R.layout.activity_main);
 
-
         Intent intent = new Intent(MainActivity.this, MapsActivity.class);
         startActivity(intent);
+
 
         Button button = findViewById(R.id.button);
 
@@ -43,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
         });
 
+
+
+
+/*
 	    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
 	    if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -57,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 		    }
 	    } else {
 		    System.out.println("NO PERMISSION");
-	    }
+	    }*/
     }
 
 
