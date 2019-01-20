@@ -14,10 +14,11 @@ import android.widget.Button;
 public class EventsCreatorActivity extends AppCompatActivity {
 
     public void sendButtonId(Button button) {
-        String id = Integer.toString(button.getId());
+        String type = Integer.toString(button.getId());
         Intent intent = new Intent(EventsCreatorActivity.this, EventCreatorPart2.class);
-        intent.putExtra("id", id);
-        Log.d("TEST", id);
+        intent.putExtra("position", getIntent().getStringExtra("position"));
+        intent.putExtra("type", type);
+
         startActivity(intent);
 
     }
