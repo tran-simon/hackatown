@@ -24,7 +24,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
 
     private String date = "", description = "";
-    private Events.EventType type = Events.EventType.Autre;
+    private Request.EventType type = Request.EventType.Autre;
     private int id = 0, user_id = 0;
     private LatLng position = new LatLng(0, 0);
 
@@ -66,10 +66,10 @@ public class EventInfoActivity extends AppCompatActivity {
 
         switch (type)
         {
-            case FeuxCirculation:
+            case FeuxCiruculation:
                 getSupportActionBar().setTitle(R.string.feu_circulation);
                 break;
-            case PanneauxSignalisation:
+            case PanneauxSiganlisation:
                 getSupportActionBar().setTitle(R.string.panneau_signalisation);
                 break;
             case PanneauxRue:
@@ -112,7 +112,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
         date = objectInfo.getString("date");
         description = objectInfo.getString("description");
-        type = Events.EventType.values()[objectInfo.getInt("type")];
+        type = Request.EventType.values()[objectInfo.getInt("type")];
         user_id = objectInfo.getInt("user_id");
 
         String latlng = objectInfo.getString("position");
