@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 public class CallAPI extends AsyncTask<Request, String, JSONObject>
@@ -75,7 +76,7 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
 			dos.writeBytes("Content-Disposition: form-data; name=\"description\"" + lineEnd);
 			dos.writeBytes(lineEnd);
-			dos.writeBytes(params[0].getDescription());
+			dos.write(params[0].getDescription().getBytes(StandardCharsets.UTF_8));
 			dos.writeBytes(lineEnd);
 
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -133,9 +134,6 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 
 	@Override
 	protected void onPostExecute(JSONObject result) {
-		// TODO: Parse as list
-		listener.OnDataReceived(result.toString());
-
-
+		listener.OnDataReceived("");
 	}
 }

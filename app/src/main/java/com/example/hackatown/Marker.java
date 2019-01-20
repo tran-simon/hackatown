@@ -1,6 +1,15 @@
 package com.example.hackatown;
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
+
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -40,63 +49,69 @@ public class Marker {
         markerOption.position(position);
         id = info.getInt("id");
 
-        initIcon();
 
     }
-    public void initIcon(){
-        int iconID = R.mipmap.icon_deneigement_round;
+
+
+
+
+    public int getIconId(){
+        int iconID = R.mipmap.ic_warning;
         switch (type)
         {
             case FeuxCiruculation:
-                iconID = R.mipmap.icon_traffic_light;
+                iconID = R.drawable.icon_feu_circulation;
+
                 break;
             case PanneauxSiganlisation:
-                iconID = R.mipmap.icon_signalisation;
+                iconID = R.drawable.icon_signalisation;
                 break;
             case PanneauxRue:
-                iconID = R.mipmap.icon_paneaux_rue;
+//
                 break;
             case Deneigement:
-                iconID = R.mipmap.icon_deneigement_round;
+                iconID = R.drawable.icon_deneigement;
                 break;
             case NidDePoule:
-                iconID = R.mipmap.icon_nid_poule;
+//                iconID = R.drawable.icon_
                 break;
             case PoubelleRecup:
-                iconID = R.mipmap.icon_poubelle;
+                iconID = R.drawable.icon_poubelle;
                 break;
             case Stationnement:
-                iconID = R.mipmap.icon_stationnement;
+                iconID = R.drawable.icon_stationnement;
                 break;
             case AbrisBus:
-                iconID = R.mipmap.icon_abribus;
+                iconID = R.drawable.icon_abribus;
                 break;
             case Lampadaire:
-                iconID = R.mipmap.icon_lampadaire;
+                iconID = R.drawable.icon_lampadaire;
                 break;
             case InfSport:
-                iconID = R.mipmap.icon_inf_sport;
+                iconID = R.drawable.icon_infrastructure_sportive;
                 break;
 
             case Autre: default:
             iconID = R.mipmap.icon_autre;
             break;
         }
-
-        setIcon(iconID);
+        return iconID;
     }
 
 
-
-
-
     /**
-     * Permet de changer l'icone
-     *
-     * @param id id de l'image (R.drawable.ic_warning_black_24dp)
+     * SOURCE: https://stackoverflow.com/questions/42365658/custom-marker-in-google-maps-in-android-with-vector-asset-icon/45564994#45564994
+     * @param context
+     * @param vectorResId
+     * @return
      */
-    public void setIcon(int id) {
-        getMarkerOption().icon(BitmapDescriptorFactory.fromResource(id));
+    public BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     public void setPosition(LatLng latLng) {
