@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".EventCreatorPart2">
 
+    <EditText
+        android:id="@+id/others"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/common_google_signin_btn_text_light_disabled"
+        android:gravity="top"
+        android:hint="Précisez le type de requête"
+        android:inputType="textMultiLine"
+        android:maxLength="120"
+        android:scrollHorizontally="false"
+        android:singleLine="false"
+        android:enabled="false"
+        app:layout_constraintBottom_toTopOf="@+id/insertImgBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EventName"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/EventName"
         android:layout_width="0dp"

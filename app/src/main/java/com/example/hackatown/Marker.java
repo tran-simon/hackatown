@@ -44,34 +44,24 @@ public class Marker {
         switch (type)
         {
             case FeuxCiruculation:
-                iconID = R.mipmap.icon_feu_circulation;
                 break;
             case PanneauxSiganlisation:
-                iconID = R.mipmap.icon_signalisation;
                 break;
             case PanneauxRue:
-                iconID = R.mipmap.ic_warning;
                 break;
             case Deneigement:
-                iconID = R.mipmap.icon_deneigement;
                 break;
             case NidDePoule:
-                iconID = R.mipmap.icon_nid_poule;
                 break;
             case PoubelleRecup:
-                iconID = R.mipmap.icon_poubelle;
                 break;
             case Stationnement:
-                iconID = R.mipmap.icon_stationnement;
                 break;
             case AbrisBus:
-                iconID = R.mipmap.icon_abribus;
                 break;
             case Lampadaire:
-                iconID = R.mipmap.icon_lampadaire;
                 break;
             case InfSport:
-                iconID = R.mipmap.icon_inf_sportive;
                 break;
 
             case Autre: default:

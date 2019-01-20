@@ -1,40 +1,36 @@
 package com.example.hackatown;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.location.Location;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Date;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
 
 public class EventCreatorPart2 extends AppCompatActivity {
 
+
+    private Boolean isOthersSelected=false;
+    //Paramètre et méthodes pour la prise de photo
+    private final int REQUEST_PICTURE = 324;
     //Truc pour la photo
     String mCurrentPhotoPath;
     private File createImageFile() {
@@ -56,7 +52,6 @@ public class EventCreatorPart2 extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
     private void dispatchTakePictureIntent() throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -70,93 +65,78 @@ public class EventCreatorPart2 extends AppCompatActivity {
                         "com.example.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 1);
+                startActivityForResult(takePictureIntent, REQUEST_PICTURE);
                 System.out.println("YESS");
             }
         } else {
             System.out.println("MABAD");
         }
     }
-    //Fin truc photo
+    //Fin paramètre et méthodes pour la prise de photo
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_PICTURE && resultCode == RESULT_OK && data != null)
+        {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Constructeur
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_creator_part2);
 
         //Parametre
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
-        ImageButton takePicture = findViewById(R.id.insertImgBtn);
+        ImageButton takePictureBtn = findViewById(R.id.insertImgBtn);
+        final EditText editableType = findViewById(R.id.others);
+        editableType.setEnabled(false);
+        editableType.setVisibility(View.INVISIBLE);
+        TextView pageTitle = findViewById(R.id.EventName);
+
         Bundle extras = getIntent().getExtras();
-        TextView title = findViewById(R.id.EventName);
         Request.EventType type = Request.EventType.values()[getIntent().getIntExtra("type", 0)] ;
-        final Request.EventType typeDeRequest;
         String locationStrings[] = getIntent().getStringExtra("position").split(",");
+        final Request.EventType typeDeRequest;
         final LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
 
 
         //Définir le type de l'event
         switch (type) {
-            case FeuxCiruculation:  typeDeRequest = Request.EventType.FeuxCiruculation;
-                                    this.setTitle("Feu de circulation");
-                                    title.setText("Feu de circulation");
-                                    break;
-
-            case PanneauxSiganlisation:  typeDeRequest = Request.EventType.PanneauxSiganlisation;
-                                         this.setTitle("Panneau de signalisation");
-                                         title.setText("Panneau de signalisation");
-                                         break;
-
-            case PanneauxRue:  typeDeRequest = Request.EventType.PanneauxRue;
-                               this.setTitle("Panneau de nom de rue");
-                               title.setText("Panneau de nom de rue");
-                               break;
-
-            case Deneigement:  typeDeRequest = Request.EventType.Deneigement;
-                               this.setTitle("Déneigement");
-                               title.setText("Déneigement");
-                               break;
-
-            case NidDePoule:  typeDeRequest = Request.EventType.NidDePoule;
-                              this.setTitle("Nid de poule");
-                              title.setText("Nid de poule");
-                              break;
-
-            case PoubelleRecup:  typeDeRequest = Request.EventType.PoubelleRecup;
-                                 this.setTitle("Poubelle/Récupération remplie");
-                                 title.setText("Poubelle/Récupération remplie");
-                                 break;
-
-            case Stationnement:  typeDeRequest = Request.EventType.Stationnement;
-                                 this.setTitle("Stationnement illégal");
-                                 title.setText("Stationnement illégal");
-                                 break;
-
-            case Lampadaire:  typeDeRequest = Request.EventType.Lampadaire;
-                              this.setTitle("Lampadaire");
-                              title.setText("Lampadaire");
-                              break;
-
-            case InfSport:  typeDeRequest = Request.EventType.InfSport;
-                            this.setTitle("Infrastructure sportive");
-                            title.setText("Infrastructure sportive");
-                            break;
-
-            case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;
-                           this.setTitle("Abribus");
-                           title.setText("Abribus");
-                           break;
-
-            case Autre: typeDeRequest = Request.EventType.Autre;
-                        this.setTitle("Autre");
-                        title.setText("Autre");
-                        break;
-
+            case FeuxCiruculation:  typeDeRequest = Request.EventType.FeuxCiruculation; pageTitle.setText("Feu de circulation");
+            break;
+            case PanneauxSiganlisation:  typeDeRequest = Request.EventType.PanneauxSiganlisation;  pageTitle.setText("Panneau de signalisation");
+                break;
+            case PanneauxRue:  typeDeRequest = Request.EventType.PanneauxRue;  pageTitle.setText("Panneau de nom de rue");
+                break;
+            case Deneigement:  typeDeRequest = Request.EventType.Deneigement;  pageTitle.setText("Déneigement");
+                break;
+            case NidDePoule:  typeDeRequest = Request.EventType.NidDePoule;  pageTitle.setText("Nid de poule");
+                break;
+            case PoubelleRecup:  typeDeRequest = Request.EventType.PoubelleRecup;  pageTitle.setText("Poubelle/Récupération remplie");
+                break;
+            case Stationnement:  typeDeRequest = Request.EventType.Stationnement;  pageTitle.setText("Stationnement illégal");
+                break;
+            case Lampadaire:  typeDeRequest = Request.EventType.Lampadaire;  pageTitle.setText("Lampadaire");
+                break;
+            case InfSport:  typeDeRequest = Request.EventType.InfSport;  pageTitle.setText("Infrastructure sportive");
+                break;
+            case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;  pageTitle.setText("Abribus");
+                break;
+            case Autre: typeDeRequest = Request.EventType.Autre;  pageTitle.setText("Autre");
+                break;
             default: typeDeRequest = null;
                 break;
         }
 
+
+        //Écouteurs de bouton
 
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,17 +144,25 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 //debut
                 EditText editableDescription = findViewById(R.id.plain_text_input);
                 String description = editableDescription.getText().toString();
+                if(isOthersSelected){
+                    description = "Requête de type : " + editableType.getText().toString() + ". " + description;
+                }
                 Date todaysDate = new Date();
                 int userId = 1;
                 Request request = new Request( typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
+
                 Log.d("POLY", "Creation dune request:");
                 Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : (" + location.latitude + ":" + location.longitude + "), Date: " + todaysDate);
+
                 new CallAPI().execute(request);
+
+                Intent intent = new Intent(EventCreatorPart2.this, MapsActivity.class);
+                startActivity(intent);
                  //fin
             }
         });
 
-        takePicture.setOnClickListener(new View.OnClickListener() {
+        takePictureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //debut
