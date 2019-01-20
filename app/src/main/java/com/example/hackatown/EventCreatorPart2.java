@@ -1,6 +1,7 @@
 package com.example.hackatown;
 
 import android.support.design.widget.TextInputEditText;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
+import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class EventCreatorPart2 extends AppCompatActivity {
 
@@ -71,5 +75,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
                  //fin
             }
         });
+        String locationStrings[] = getIntent().getStringExtra("position").split(",");
+
+        LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
     }
 }
