@@ -10,10 +10,12 @@ import android.widget.Button;
 public class EventsCreatorActivity extends AppCompatActivity {
 
 
-    public void sendButtonId(Events.EventType event) {
+    public void sendButtonId(Request.EventType event) {
         Intent intent = new Intent(EventsCreatorActivity.this, EventCreatorPart2.class);
-        intent.putExtra("id", event);
         Log.d("Test", event.toString());
+        intent.putExtra("position", getIntent().getStringExtra("position"));
+        intent.putExtra("type", event.ordinal());
+
         startActivity(intent);
 
     }
@@ -41,7 +43,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.FeuxCiruculation;
+                final Request.EventType eventButton = Request.EventType.FeuxCiruculation;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -50,7 +52,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.PanneauxSiganlisation;
+                final Request.EventType eventButton = Request.EventType.PanneauxSiganlisation;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -59,7 +61,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.PanneauxRue;
+                final Request.EventType eventButton = Request.EventType.PanneauxRue;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -68,7 +70,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.Deneigement;
+                final Request.EventType eventButton = Request.EventType.Deneigement;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -77,7 +79,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.NidDePoule;
+                final Request.EventType eventButton = Request.EventType.NidDePoule;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -86,7 +88,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.PoubelleRecup;
+                final Request.EventType eventButton = Request.EventType.PoubelleRecup;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -95,7 +97,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.Stationnement;
+                final Request.EventType eventButton = Request.EventType.Stationnement;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -104,7 +106,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.Lampadaire;
+                final Request.EventType eventButton = Request.EventType.Lampadaire;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -113,7 +115,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.InfSport;
+                final Request.EventType eventButton = Request.EventType.InfSport;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -122,7 +124,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.AbrisBus;
+                final Request.EventType eventButton = Request.EventType.AbrisBus;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }
@@ -131,7 +133,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         button11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Events.EventType eventButton = Events.EventType.Autre;
+                final Request.EventType eventButton = Request.EventType.Autre;
                 Log.d("TEST", eventButton.toString());
                 sendButtonId(eventButton);
             }

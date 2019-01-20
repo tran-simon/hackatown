@@ -24,7 +24,8 @@ public class EventInfoActivity extends AppCompatActivity {
 
 
     private String date = "", description = "";
-    private int id = 0, type = 0, user_id = 0;
+    private Request.EventType type = Request.EventType.Autre;
+    private int id = 0, user_id = 0;
     private LatLng position = new LatLng(0, 0);
 
     @Override
@@ -34,14 +35,6 @@ public class EventInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         ImageView imageView = findViewById(R.id.imageView);
 
@@ -55,7 +48,6 @@ public class EventInfoActivity extends AppCompatActivity {
         });
 
         textView = findViewById(R.id.txt_scrollable);
-        textView.setText("ASDF");
 
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
@@ -64,13 +56,51 @@ public class EventInfoActivity extends AppCompatActivity {
         try
         {
             loadData();
+
         } catch (JSONException e)
         {
             e.printStackTrace();
+            Log.d("POLY", "onCreate: adsfad");
             //todo
         }
 
-
+        switch (type)
+        {
+            case FeuxCiruculation:
+                getSupportActionBar().setTitle(R.string.feu_circulation);
+                break;
+            case PanneauxSiganlisation:
+                getSupportActionBar().setTitle(R.string.panneau_signalisation);
+                break;
+            case PanneauxRue:
+                getSupportActionBar().setTitle(R.string.panneau_rue);
+                break;
+            case Deneigement:
+                getSupportActionBar().setTitle(R.string.deneigement);
+                break;
+            case NidDePoule:
+                getSupportActionBar().setTitle(R.string.nid_poule);
+                break;
+            case PoubelleRecup:
+                getSupportActionBar().setTitle(R.string.poubelle);
+                break;
+            case Stationnement:
+                getSupportActionBar().setTitle(R.string.stationnement);
+                break;
+            case AbrisBus:
+                getSupportActionBar().setTitle(R.string.abris_bus);
+                break;
+            case Lampadaire:
+                getSupportActionBar().setTitle(R.string.lampadaire);
+                break;
+            case InfSport:
+                getSupportActionBar().setTitle(R.string.infrastructure_sportive);
+                break;
+            case Autre:
+            default:
+                getSupportActionBar().setTitle(R.string.autre);
+                break;
+        }
 
     }
 
@@ -82,7 +112,7 @@ public class EventInfoActivity extends AppCompatActivity {
 
         date = objectInfo.getString("date");
         description = objectInfo.getString("description");
-        type = objectInfo.getInt("type");
+        type = Request.EventType.values()[objectInfo.getInt("type")];
         user_id = objectInfo.getInt("user_id");
 
         String latlng = objectInfo.getString("position");
@@ -92,7 +122,8 @@ public class EventInfoActivity extends AppCompatActivity {
         position = new LatLng(Double.parseDouble(positionStrings[0]), Double.parseDouble(positionStrings[1]));
 
 
-        textView.setText("Date: " + date + "\nDescription: " + description + "\nPosition (lat, long): (" + position.latitude + ":" + position.longitude  + ")\nUser: " + user_id);
+        textView.setText("Date: " + date + "\nDescription: " + description + "\nPosition (lat, long): (" + position.latitude + ":" + position.longitude + ")\nUser: " + user_id);
+
 
     }
 }

@@ -20,7 +20,7 @@ public class Request
     //private Image image; TODO
 
     //Constructor
-    public Request(EventType type, String description, LatLng position, Date date /*Image image TODO*/, int user_id){
+    public Request(EventType type, String description, LatLng position, Date date , int user_id){
         this.type = type;
         this.description = description;
         this.position = position;
@@ -40,6 +40,14 @@ public class Request
 
     public String getDescription() {
         return description;
+    }
+
+    public LatLng getPosition() {
+    	return position;
+    }
+
+    public int getUserID() {
+    	return user_id;
     }
 
     public void setDescription(String description) {
@@ -63,6 +71,7 @@ public class Request
     }
 
     String xWwwFormUrlencoded() {
+    	//https://stackoverflow.com/a/8129350
 	    return String.format(Locale.US, "type=%d&date=%d&position=%f,%f&description=%s&user_id=%d",
 			    type.ordinal(), date.getTime(), position.latitude, position.longitude, description, user_id);
     }

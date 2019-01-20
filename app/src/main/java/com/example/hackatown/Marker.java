@@ -9,29 +9,40 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.File;
 
 public class Marker {
-    public enum Type {
-        DEFAULT,
-        POUBELLE,
-        NID_POULE
-    }
 
     private MarkerOptions markerOption = new MarkerOptions();
 
     public Marker() {
-        this(Type.DEFAULT);
+        this(Request.EventType.Autre);
     }
 
-    public Marker(Type type) {
+    public Marker(Request.EventType type) {
         //TODO: Definir les images en fonction du type
         int iconID = 0;
         switch (type)
         {
-            case POUBELLE:
+            case FeuxCiruculation:
                 break;
-            case NID_POULE:
+            case PanneauxSiganlisation:
+                break;
+            case PanneauxRue:
+                break;
+            case Deneigement:
+                break;
+            case NidDePoule:
+                break;
+            case PoubelleRecup:
+                break;
+            case Stationnement:
+                break;
+            case AbrisBus:
+                break;
+            case Lampadaire:
+                break;
+            case InfSport:
                 break;
 
-            case DEFAULT: default:
+            case Autre: default:
             iconID = R.mipmap.ic_warning;
                     break;
         }

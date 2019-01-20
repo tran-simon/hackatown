@@ -3,7 +3,10 @@ package com.example.hackatown;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +18,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -29,6 +36,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private ArrayList<Marker> markerList = new ArrayList<>();
 
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Location mLastKnownLocation ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +54,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MapsActivity.this, EventsCreatorActivity.class);
+                        getDeviceLocation();
+                        String locationString = mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude();
+                        intent.putExtra("position", locationString);
                         startActivity(intent);
 
                     }
                 }
         );
+
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
     }
 
     /**
@@ -69,6 +85,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.addMarker(marker.getMarkerOption());
         }
 
+    }
+
+    private void getDeviceLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+         */
+        try
+        {
+            Task locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful())
+                    {
+                        // Set the map's camera position to the current location of the device.
+                        mLastKnownLocation = (Location) task.getResult();
+                    }
+                    else
+                    {
+                    }
+                }
+            });
+        } catch (SecurityException e)
+        {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 
 
@@ -131,7 +174,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
                 for (Marker marker1 : markerList)
                 {
-                    Log.d("POLY", marker.getPosition() + " : " + marker1.getMarkerOption());
                     if (marker1.getMarkerOption().getPosition().equals(marker.getPosition()))
                     {
                         //TODO: L'user a cliqué sur le marker, launch activity
@@ -146,7 +188,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             }
         });
+        getDeviceLocation();
+
+
+
     }
+
+
 
 
     @Override
