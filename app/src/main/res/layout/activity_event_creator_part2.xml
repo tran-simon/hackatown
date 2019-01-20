@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventCreatorPart2">
+
+    <TextView
+        android:id="@+id/EventName"
+        android:layout_width="218dp"
+        android:layout_height="32dp"
+        android:background="@color/colorAccent"
+        android:text="Nom de ton event"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/eventDescription"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="178dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="146dp"
+            android:background="@color/colorAccent"
+            android:hint="Ecrivez un description de levent a declarer" />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/insertImgBtn"
+        android:layout_width="112dp"
+        android:layout_height="106dp"
+        app:srcCompat="@drawable/ic_menu_camera"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="445dp" />
+
+    <Button
+        android:id="@+id/sendRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="609dp" />
+</android.support.constraint.ConstraintLayout>
