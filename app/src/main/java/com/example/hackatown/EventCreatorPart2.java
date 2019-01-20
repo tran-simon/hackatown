@@ -34,30 +34,64 @@ public class EventCreatorPart2 extends AppCompatActivity {
         String locationStrings[] = getIntent().getStringExtra("position").split(",");
         final LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
 
+
         //Définir le type de l'event
         switch (type) {
-            case FeuxCiruculation:  typeDeRequest = Request.EventType.FeuxCiruculation; title.setText("Feu de circulation");
-            break;
-            case PanneauxSiganlisation:  typeDeRequest = Request.EventType.PanneauxSiganlisation;  title.setText("Panneau de signalisation");
-                break;
-            case PanneauxRue:  typeDeRequest = Request.EventType.PanneauxRue;  title.setText("Panneau de nom de rue");
-                break;
-            case Deneigement:  typeDeRequest = Request.EventType.Deneigement;  title.setText("Déneigement");
-                break;
-            case NidDePoule:  typeDeRequest = Request.EventType.NidDePoule;  title.setText("Nid de poule");
-                break;
-            case PoubelleRecup:  typeDeRequest = Request.EventType.PoubelleRecup;  title.setText("Poubelle/Récupération remplie");
-                break;
-            case Stationnement:  typeDeRequest = Request.EventType.Stationnement;  title.setText("Stationnement illégal");
-                break;
-            case Lampadaire:  typeDeRequest = Request.EventType.Lampadaire;  title.setText("Lampadaire");
-                break;
-            case InfSport:  typeDeRequest = Request.EventType.InfSport;  title.setText("Infrastructure sportive");
-                break;
-            case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;  title.setText("Abribus");
-                break;
-            case Autre: typeDeRequest = Request.EventType.Autre;  title.setText("Autre");
-                break;
+            case FeuxCiruculation:  typeDeRequest = Request.EventType.FeuxCiruculation;
+                                    this.setTitle("Feu de circulation");
+                                    title.setText("Feu de circulation");
+                                    break;
+
+            case PanneauxSiganlisation:  typeDeRequest = Request.EventType.PanneauxSiganlisation;
+                                         this.setTitle("Panneau de signalisation");
+                                         title.setText("Panneau de signalisation");
+                                         break;
+
+            case PanneauxRue:  typeDeRequest = Request.EventType.PanneauxRue;
+                               this.setTitle("Panneau de nom de rue");
+                               title.setText("Panneau de nom de rue");
+                               break;
+
+            case Deneigement:  typeDeRequest = Request.EventType.Deneigement;
+                               this.setTitle("Déneigement");
+                               title.setText("Déneigement");
+                               break;
+
+            case NidDePoule:  typeDeRequest = Request.EventType.NidDePoule;
+                              this.setTitle("Nid de poule");
+                              title.setText("Nid de poule");
+                              break;
+
+            case PoubelleRecup:  typeDeRequest = Request.EventType.PoubelleRecup;
+                                 this.setTitle("Poubelle/Récupération remplie");
+                                 title.setText("Poubelle/Récupération remplie");
+                                 break;
+
+            case Stationnement:  typeDeRequest = Request.EventType.Stationnement;
+                                 this.setTitle("Stationnement illégal");
+                                 title.setText("Stationnement illégal");
+                                 break;
+
+            case Lampadaire:  typeDeRequest = Request.EventType.Lampadaire;
+                              this.setTitle("Lampadaire");
+                              title.setText("Lampadaire");
+                              break;
+
+            case InfSport:  typeDeRequest = Request.EventType.InfSport;
+                            this.setTitle("Infrastructure sportive");
+                            title.setText("Infrastructure sportive");
+                            break;
+
+            case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;
+                           this.setTitle("Abribus");
+                           title.setText("Abribus");
+                           break;
+
+            case Autre: typeDeRequest = Request.EventType.Autre;
+                        this.setTitle("Autre");
+                        title.setText("Autre");
+                        break;
+
             default: typeDeRequest = null;
                 break;
         }
