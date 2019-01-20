@@ -11,12 +11,10 @@ import java.net.URL;
 
 public class GetData extends AsyncTask<Integer, String, String> {
 
-    private Activity initialActivity;
-    private Class nextActivity;
+    private OnDataReceivedListener listener;
 
-    public GetData(Activity initialActivity, Class nextActivity) {
-        this.initialActivity = initialActivity;
-        this.nextActivity = nextActivity;
+    public GetData(OnDataReceivedListener listener) {
+        this.listener = listener;
     }
 
     // https://stackoverflow.com/a/2938787
@@ -61,10 +59,10 @@ public class GetData extends AsyncTask<Integer, String, String> {
     @Override
     protected void onPostExecute(String result) {
         // TODO: Parse as list
-        Intent intent = new Intent(initialActivity.getApplicationContext(), nextActivity);
-        intent.putExtra("info", result);
-        initialActivity.startActivity(intent);
-
+//        Intent intent = new Intent(initialActivity.getApplicationContext(), nextActivity);
+//        intent.putExtra("info", result);
+//        initialActivity.startActivity(intent);
+        listener.OnDataReceived(result);
 
     }
 }
