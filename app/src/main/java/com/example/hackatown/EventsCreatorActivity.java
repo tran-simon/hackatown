@@ -17,6 +17,7 @@ public class EventsCreatorActivity extends AppCompatActivity {
         intent.putExtra("type", event.ordinal());
 
         startActivity(intent);
+        finish();
 
     }
     @Override

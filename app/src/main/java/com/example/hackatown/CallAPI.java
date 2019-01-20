@@ -2,18 +2,22 @@ package com.example.hackatown;
 
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
 
 public class CallAPI extends AsyncTask<Request, String, JSONObject>
 {
 
-	public CallAPI() {
-		//set context variables if required
+	private OnDataReceivedListener listener;
+	public CallAPI(OnDataReceivedListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
@@ -130,6 +134,8 @@ public class CallAPI extends AsyncTask<Request, String, JSONObject>
 	@Override
 	protected void onPostExecute(JSONObject result) {
 		// TODO: Parse as list
+		listener.OnDataReceived(result.toString());
+
 
 	}
 }

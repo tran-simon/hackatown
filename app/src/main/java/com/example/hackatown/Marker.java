@@ -24,7 +24,11 @@ public class Marker {
 
         date = info.getString("date");
         description = info.getString("description");
-        type = Request.EventType.values()[info.getInt("type")];
+        int type1 = info.getInt("type");
+        if (type1 < Request.EventType.values().length)
+        {
+            type = Request.EventType.values()[type1];
+        }
         user_id = info.getInt("user_id");
 
         String latlng = info.getString("position");
