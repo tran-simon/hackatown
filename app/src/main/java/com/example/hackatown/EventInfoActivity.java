@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class EventInfoActivity extends AppCompatActivity {
+public class EventInfoActivity extends AppCompatActivity implements OnDataReceivedListener {
     private String info = "";
     private JSONObject objectInfo = new JSONObject();
     private TextView textView;
@@ -96,17 +96,8 @@ public class EventInfoActivity extends AppCompatActivity {
         textView = findViewById(R.id.txt_scrollable);
 
 
-        Intent intent = getIntent();
-        info = intent.getStringExtra("info");
 
 
-        try
-        {
-            loadData();
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
 
         switch (type)
 
@@ -147,12 +138,41 @@ public class EventInfoActivity extends AppCompatActivity {
                 break;
         }
 
+
+        GetData getData = new GetData(new OnDataReceivedListener() {
+            @Override
+            public void OnDataReceived(String data) {
+                info = data;
+                try
+                {
+                    loadData();
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
+        getData.execute(getIntent().getIntExtra("id", 0));
+
+
+
     }
 
 
-    public void loadData() throws JSONException {
-        Log.d("POLY", "loadData:  " + info);
+    @Override
+    public void OnDataReceived(String data) {
+        info = data;
+        try
+        {
+            loadData();
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
 
+    }
+
+    public void loadData() throws JSONException {
         objectInfo = new JSONArray(info).getJSONObject(0);
 
 

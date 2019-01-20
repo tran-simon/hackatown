@@ -16,7 +16,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -41,14 +44,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener, ActivityCompat.OnRequestPermissionsResultCallback{
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private GoogleMap mMap;
     private ArrayList<Marker> markerList = new ArrayList<>();
     private String info = "";
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Location mLastKnownLocation ;
+    private Location mLastKnownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolBar);
+
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(
@@ -74,10 +82,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
         );
 
-        info = getIntent().getStringExtra("info");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+    }
+
+    public void refresh() {
+        checkPermission();
+        GetData getData = new GetData(new OnDataReceivedListener() {
+            @Override
+            public void OnDataReceived(String data) {
+                info = data;
+                loadData();
+            }
+        });
+        getData.execute(-1);
     }
 
     /**
@@ -101,10 +120,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         {
             e.printStackTrace();
         }
-
-
-
-
 
 
         for (Marker marker : markerList)
@@ -154,7 +169,42 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setPadding(0, getSupportActionBar().getHeight(),0, 0);
 
+        checkPermission();
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                for (Marker marker1 : markerList)
+                {
+                    if (marker1.getMarkerOption().getPosition().equals(marker.getPosition()))
+                    {
+                        //TODO: L'user a cliqué sur le marker, launch activity
+                        //                        GetData getData = new GetData(MapsActivity.this, EventInfoActivity.class);
+                        //                        getData.execute(marker1.getId());//-1
+                        Intent intent = new Intent(MapsActivity.this, EventInfoActivity.class);
+                        intent.putExtra("id", marker1.getId());
+                        startActivity(intent);
+
+                        break;
+                    }
+                }
+
+                return true;
+            }
+        });
+        getDeviceLocation();
+
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(45.50884, -73.58781), 10));
+        refresh();
+
+    }
+
+    public void checkPermission(){
+        Log.d("POLY", "checkPermission: ");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
 
         // Permission is not granted
@@ -191,37 +241,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
 
-
-        loadData();
-
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                for (Marker marker1 : markerList)
-                {
-                    if (marker1.getMarkerOption().getPosition().equals(marker.getPosition()))
-                    {
-                        //TODO: L'user a cliqué sur le marker, launch activity
-                        GetData getData = new GetData(MapsActivity.this, EventInfoActivity.class);
-                        getData.execute(marker1.getId());//-1
-
-                        break;
-                    }
-                }
-
-                return true;
-            }
-        });
-        getDeviceLocation();
-
-
-
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -254,11 +274,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onCameraMove() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.maps_activity_toolbar_menu, menu);
 
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.refresh:
+                refresh();
+                break;
 
-
-
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

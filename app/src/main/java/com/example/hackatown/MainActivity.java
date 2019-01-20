@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         setContentView(R.layout.activity_main);
 
 
-        GetData getData = new GetData(this, MapsActivity.class);
-
-        getData.execute(-1);
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        startActivity(intent);
 
         Button button = findViewById(R.id.button);
 
