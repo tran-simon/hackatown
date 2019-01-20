@@ -76,16 +76,6 @@ public class EventCreatorPart2 extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_PICTURE && resultCode == RESULT_OK && data != null)
-        {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         //Constructeur
@@ -128,7 +118,7 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 break;
             case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;  pageTitle.setText("Abribus");
                 break;
-            case Autre: typeDeRequest = Request.EventType.Autre;  pageTitle.setText("Autre");
+            case Autre: typeDeRequest = Request.EventType.Autre;  pageTitle.setText("Autre"); isOthersSelected=true; editableType.setVisibility(View.VISIBLE);editableType.setEnabled(true);
                 break;
             default: typeDeRequest = null;
                 break;
