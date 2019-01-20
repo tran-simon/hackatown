@@ -42,15 +42,14 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         });
 
 	    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-	    requestPermissions(new String[]{Manifest.permission.INTERNET}, 1);
 
 	    if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 		    if (checkSelfPermission(android.Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
 			    Request rr = new Request(Request.EventType.FeuxCiruculation, "dés", new LatLng(4, 5), new Date(), 3);
 			    System.out.println("YEEEEEEE");
 
-			    //new CallAPI().execute(rr);
-			    new GetData().execute(-1);
+//			    new CallAPI().execute(rr);
+			   // new GetData().execute(-1);
 		    } else {
 		    	System.out.println("NO INTERNET");
 		    }
