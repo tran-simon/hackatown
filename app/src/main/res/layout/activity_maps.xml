@@ -23,5 +23,5 @@
         android:clickable="true"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
-        map:srcCompat="@android:drawable/ic_menu_add" />
+        map:srcCompat="@drawable/icon_fab" />
 </android.support.constraint.ConstraintLayout>
