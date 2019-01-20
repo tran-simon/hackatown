@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +56,20 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         setContentView(R.layout.activity_event_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Button cancel = findViewById(R.id.delete);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //debut
+                try {
+                    new Delete().execute(objectInfo.getInt("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //fin
+            }
+        });
 
 
         imageView = findViewById(R.id.imageView);
