@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 			    System.out.println("YEEEEEEE");
 
 			    new CallAPI().execute(rr);
-			   // new GetData().execute(-1);
+				new GetData().execute(-1);
 		    } else {
 		    	System.out.println("NO INTERNET");
 		    }
