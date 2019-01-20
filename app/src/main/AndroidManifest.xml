@@ -35,15 +35,12 @@
 		</provider>
 
 
-<<<<<<< HEAD
 	    <activity
 			    android:name=".EventInfoActivity"
 			    android:label="@string/title_activity_event_info"
 			    android:theme="@style/AppTheme"/>
-=======
 		<activity android:name=".EventCreatorPart2"></activity>
 		<activity android:name=".EventsCreatorActivity" />
->>>>>>> origin/Charlie
 
 		<!-- https://stackoverflow.com/a/50779232 -->
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
