@@ -29,34 +29,34 @@ public class EventCreatorPart2 extends AppCompatActivity {
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
         Bundle extras = getIntent().getExtras();
         TextView title = findViewById(R.id.EventName);
-        String idType = extras.getString("type");
+        Request.EventType type = Request.EventType.values()[getIntent().getIntExtra("type", 0)] ;
         final Request.EventType typeDeRequest;
         String locationStrings[] = getIntent().getStringExtra("position").split(",");
         final LatLng location = new LatLng(Double.parseDouble(locationStrings[0]), Double.parseDouble(locationStrings[1]));
 
         //Définir le type de l'event
-        switch (idType) {
-            case "2131230766":  typeDeRequest = Request.EventType.FeuxCiruculation; title.setText("Feu de circulation");
+        switch (type) {
+            case FeuxCiruculation:  typeDeRequest = Request.EventType.FeuxCiruculation; title.setText("Feu de circulation");
             break;
-            case "2131230771":  typeDeRequest = Request.EventType.PanneauxSiganlisation;  title.setText("Panneau de signalisation");
+            case PanneauxSiganlisation:  typeDeRequest = Request.EventType.PanneauxSiganlisation;  title.setText("Panneau de signalisation");
                 break;
-            case "2131230770":  typeDeRequest = Request.EventType.PanneauxRue;  title.setText("Panneau de nom de rue");
+            case PanneauxRue:  typeDeRequest = Request.EventType.PanneauxRue;  title.setText("Panneau de nom de rue");
                 break;
-            case "2131230765":  typeDeRequest = Request.EventType.Deneigement;  title.setText("Déneigement");
+            case Deneigement:  typeDeRequest = Request.EventType.Deneigement;  title.setText("Déneigement");
                 break;
-            case "2131230769":  typeDeRequest = Request.EventType.NidDePoule;  title.setText("Nid de poule");
+            case NidDePoule:  typeDeRequest = Request.EventType.NidDePoule;  title.setText("Nid de poule");
                 break;
-            case "2131230772":  typeDeRequest = Request.EventType.PoubelleRecup;  title.setText("Poubelle/Récupération remplie");
+            case PoubelleRecup:  typeDeRequest = Request.EventType.PoubelleRecup;  title.setText("Poubelle/Récupération remplie");
                 break;
-            case "2131230773":  typeDeRequest = Request.EventType.Stationnement;  title.setText("Stationnement illégal");
+            case Stationnement:  typeDeRequest = Request.EventType.Stationnement;  title.setText("Stationnement illégal");
                 break;
-            case "2131230768":  typeDeRequest = Request.EventType.Lampadaire;  title.setText("Lampadaire");
+            case Lampadaire:  typeDeRequest = Request.EventType.Lampadaire;  title.setText("Lampadaire");
                 break;
-            case "2131230767":  typeDeRequest = Request.EventType.InfSport;  title.setText("Infrastructure sportive");
+            case InfSport:  typeDeRequest = Request.EventType.InfSport;  title.setText("Infrastructure sportive");
                 break;
-            case "2131230763": typeDeRequest = Request.EventType.AbrisBus;  title.setText("Abribus");
+            case AbrisBus: typeDeRequest = Request.EventType.AbrisBus;  title.setText("Abribus");
                 break;
-            case "2131230764": typeDeRequest = Request.EventType.Autre;  title.setText("Autre");
+            case Autre: typeDeRequest = Request.EventType.Autre;  title.setText("Autre");
                 break;
             default: typeDeRequest = null;
                 break;

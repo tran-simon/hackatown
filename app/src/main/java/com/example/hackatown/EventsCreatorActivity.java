@@ -7,17 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-
-
-
-
 public class EventsCreatorActivity extends AppCompatActivity {
 
-    public void sendButtonId(Button button) {
-        String type = Integer.toString(button.getId());
+
+    public void sendButtonId(Request.EventType event) {
         Intent intent = new Intent(EventsCreatorActivity.this, EventCreatorPart2.class);
+        Log.d("Test", event.toString());
         intent.putExtra("position", getIntent().getStringExtra("position"));
-        intent.putExtra("type", type);
+        intent.putExtra("type", event.ordinal());
 
         startActivity(intent);
 
@@ -28,86 +25,117 @@ public class EventsCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_events_creator);
+        this.setTitle("Événement");
 
 
         final Button button1 = findViewById(R.id.button_feu_circulation);
         final Button button2 = findViewById(R.id.button_panneau);
-        final Button button3 = findViewById(R.id.button_deneigement);
-        final Button button4 = findViewById(R.id.button_nid_poule);
-        final Button button5 = findViewById(R.id.button_poubelle);
-        final Button button6 = findViewById(R.id.button_stationnement);
-        final Button button7 = findViewById(R.id.button_lampadaire);
-        final Button button8 = findViewById(R.id.button_infrastructure_sportive);
-        final Button button9 = findViewById(R.id.button_autre);
-        final Button button10 = findViewById(R.id.button_nom_rue);
+        final Button button3 = findViewById(R.id.button_nom_rue);
+        final Button button4 = findViewById(R.id.button_deneigement);
+        final Button button5 = findViewById(R.id.button_nid_poule);
+        final Button button6 = findViewById(R.id.button_poubelle);
+        final Button button7 = findViewById(R.id.button_stationnement);
+        final Button button8 = findViewById(R.id.button_lampadaire);
+        final Button button9 = findViewById(R.id.button_infrastructure_sportive);
+        final Button button10 = findViewById(R.id.button_abribus);
+        final Button button11 = findViewById(R.id.button_autre);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button1);
+                final Request.EventType eventButton = Request.EventType.FeuxCiruculation;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button2);
+                final Request.EventType eventButton = Request.EventType.PanneauxSiganlisation;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button3);
+                final Request.EventType eventButton = Request.EventType.PanneauxRue;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button4);
+                final Request.EventType eventButton = Request.EventType.Deneigement;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button5);
+                final Request.EventType eventButton = Request.EventType.NidDePoule;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button6);
+                final Request.EventType eventButton = Request.EventType.PoubelleRecup;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button7);
+                final Request.EventType eventButton = Request.EventType.Stationnement;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button8);
+                final Request.EventType eventButton = Request.EventType.Lampadaire;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button9);
+                final Request.EventType eventButton = Request.EventType.InfSport;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
 
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendButtonId(button10);
+                final Request.EventType eventButton = Request.EventType.AbrisBus;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
+            }
+        });
+
+        button11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Request.EventType eventButton = Request.EventType.Autre;
+                Log.d("TEST", eventButton.toString());
+                sendButtonId(eventButton);
             }
         });
     }
