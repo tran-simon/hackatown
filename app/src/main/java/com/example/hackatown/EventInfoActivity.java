@@ -10,11 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.*;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -192,10 +189,17 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
                 typeString = null;
                 break;
         }
-        textView.setText(date + "\n\nType de requête: " + typeString + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\nÉmis par " + user_id);
+        textView.setText(date + "\n\nType de requête: " + typeString + "\n\nDescription: " + description + "\n\nLatitude: " + position.latitude + "\n\nLongitude: " + position.longitude + "\n\n");
         textView.setTextColor(Color.GRAY);
         textView.setTextSize(30);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
+
+        new User(new OnDataReceivedListener() {
+	        @Override
+	        public void OnDataReceived(String data) {
+	        	textView.setText(textView.getText() + "Émis par " + data);
+	        }
+        }).execute(id);
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
     }
