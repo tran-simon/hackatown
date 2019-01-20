@@ -5,7 +5,11 @@ import java.util.Date;
 public class Events {
 
     //Paramètre de l'évènement
-    public enum EventType {FeuxCiruculation,PanneauxSiganlisation,PanneauxRue,Deneigement,NidDePoule,PoubelleRecup,Stationnement,AbrisBus,Lampadaire,InfSport,Autre}
+    public enum EventType {
+        FeuxCirculation, PanneauxSignalisation, PanneauxRue, Deneigement, NidDePoule, PoubelleRecup, Stationnement, AbrisBus, Lampadaire, InfSport, Autre
+
+    }
+
     private EventType type;
     private String description;
     private double latitude;
@@ -15,7 +19,7 @@ public class Events {
     //private Image image; TODO
 
     //Constructor
-    public Events(EventType type, String description, double latitude, double longitude, Date date /*Image image TODO*/){
+    public Events(EventType type, String description, double latitude, double longitude, Date date /*Image image TODO*/) {
         this.type = type;
         this.description = description;
         this.latitude = latitude;

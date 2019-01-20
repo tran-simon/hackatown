@@ -92,4 +92,15 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="feu_circulation">Traffic Light</string>
+    <string name="panneau_signalisation">Traffic Sign</string>
+    <string name="panneau_rue">Street Sign</string>
+    <string name="deneigement">Snow</string>
+    <string name="nid_poule">Pothole</string>
+    <string name="poubelle">Trash/Recycling</string>
+    <string name="stationnement">Parking</string>
+    <string name="abris_bus">Bus Shelter</string>
+    <string name="lampadaire">Street Light</string>
+    <string name="infrastructure_sportive">Sports Infrastructure</string>
+    <string name="autre">Other</string>
 </resources>
