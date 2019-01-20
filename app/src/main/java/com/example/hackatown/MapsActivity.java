@@ -160,6 +160,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             {
                 JSONObject object = jsonArray.getJSONObject(i);
                 Marker marker = new Marker(object);
+                marker.getMarkerOption().icon(marker.bitmapDescriptorFromVector(this, marker.getIconId()));
                 markerList.add(marker);
 
 
