@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -21,18 +23,51 @@ public class EventCreatorPart2 extends AppCompatActivity {
 
         //Parametre
         Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
+        Bundle extras = getIntent().getExtras();
+        TextView title = findViewById(R.id.EventName);
+        String idType = extras.getString("id");
+        final Request.EventType typeDeRequest;
+
+        //Définir le type de l'event
+        switch (idType) {
+            case "2131230766":  typeDeRequest = Request.EventType.FeuxCiruculation; title.setText("Feu de circulation");
+            break;
+            case "2131230771":  typeDeRequest = Request.EventType.PanneauxSiganlisation;  title.setText("Panneau de signalisation");
+                break;
+            case "2131230770":  typeDeRequest = Request.EventType.PanneauxRue;  title.setText("Panneau de nom de rue");
+                break;
+            case "2131230765":  typeDeRequest = Request.EventType.Deneigement;  title.setText("Déneigement");
+                break;
+            case "2131230769":  typeDeRequest = Request.EventType.NidDePoule;  title.setText("Nid de poule");
+                break;
+            case "2131230772":  typeDeRequest = Request.EventType.PoubelleRecup;  title.setText("Poubelle/Récupération remplie");
+                break;
+            case "2131230773":  typeDeRequest = Request.EventType.Stationnement;  title.setText("Stationnement illégal");
+                break;
+            case "2131230768":  typeDeRequest = Request.EventType.Lampadaire;  title.setText("Lampadaire");
+                break;
+            case "2131230767":  typeDeRequest = Request.EventType.InfSport;  title.setText("Infrastructure sportive");
+                break;
+            case "2131230763": typeDeRequest = Request.EventType.AbrisBus;  title.setText("Abribus");
+                break;
+            case "2131230764": typeDeRequest = Request.EventType.Autre;  title.setText("Autre");
+                break;
+            default: typeDeRequest = null;
+                break;
+        }
 
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //debut
-                Bundle extras = getIntent().getExtras();
-                String typeId = extras.getString("id");
-                Log.d("POLY", "Juliem:" + typeId);
-                EditText text = findViewById(R.id.plain_text_input);
-                Request request = new Request( Request.EventType.AbrisBus, text.getText().toString(), new LatLng(0,0), new Date(), 10);
+                EditText editableDescription = findViewById(R.id.plain_text_input);
+                String description = editableDescription.getText().toString();
+                LatLng presentPosition = new LatLng(0,0);
+                Date todaysDate = new Date();
+                int userId = 1;
+                Request request = new Request( typeDeRequest, description, presentPosition, todaysDate, userId);
                 Log.d("POLY", "Creation dune request:");
-                Log.d("POLY", Request.EventType.AbrisBus + text.getText().toString() + new LatLng(0,0) + new Date());
+                Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : " + presentPosition + ", Date: " + todaysDate);
                  //fin
             }
         });
