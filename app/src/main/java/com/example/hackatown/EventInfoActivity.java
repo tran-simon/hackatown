@@ -57,41 +57,6 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
 
         imageView = findViewById(R.id.imageView);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imageIsFullscreen) {
-                    imageIsFullscreen=false;
-                    imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-                    imageView.setAdjustViewBounds(true);
-                }else{
-                    imageIsFullscreen=true;
-                    imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
-            }
-        });
-
-
-        /*
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int param = imageIsFullscreen ? ConstraintLayout.LayoutParams.MATCH_PARENT : ConstraintLayout.LayoutParams.WRAP_CONTENT;
-                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(param);
-                imageIsFullscreen = !imageIsFullscreen;
-                imageView.setLayoutParams(layoutParams);
-                if (!imageIsFullscreen)
-                {
-                    imageView.setAdjustViewBounds(!imageIsFullscreen);
-                }
-                else
-                {
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
-
-            }
-        });*/
 
         textView = findViewById(R.id.txt_scrollable);
 

@@ -40,6 +40,9 @@ public class EventCreatorPart2 extends AppCompatActivity {
     private final int REQUEST_PICTURE = 324;
     //Truc pour la photo
     String mCurrentPhotoPath;
+
+    private ImageView imageView2;
+
     private File createImageFile() {
         // Create an image file name
         String imageFileName = "JPEG_PICTURE";
@@ -83,12 +86,13 @@ public class EventCreatorPart2 extends AppCompatActivity {
     //Fin truc photo
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_PICTURE && resultCode == RESULT_OK && data != null)
+        if (requestCode == REQUEST_PICTURE && resultCode == RESULT_OK)
         {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            File file = new File(mCurrentPhotoPath);
+            imageView2.setImageURI(Uri.fromFile(file));
 
         }
     }
@@ -99,8 +103,8 @@ public class EventCreatorPart2 extends AppCompatActivity {
         setContentView(R.layout.activity_event_creator_part2);
 
         //Parametre
-        Button sendRequestBtn = findViewById(R.id.sendRequestBtn);
-        ImageButton takePicture = findViewById(R.id.insertImgBtn);
+        Button sendRequestBtn = findViewById(R.id.btn_send);
+         imageView2 = findViewById(R.id.imageView2);
 
 
         Bundle extras = getIntent().getExtras();
@@ -147,14 +151,18 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 Date todaysDate = new Date();
                 int userId = 1;
                 Request request = new Request( typeDeRequest, description, location, todaysDate, userId, mCurrentPhotoPath);
-                Log.d("POLY", "Creation dune request:");
-                Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : (" + location.latitude + ":" + location.longitude + "), Date: " + todaysDate);
-                new CallAPI().execute(request);
+                new CallAPI(new OnDataReceivedListener() {
+                    @Override
+                    public void OnDataReceived(String data) {
+                        Toast.makeText(EventCreatorPart2.this, getString(R.string.msg_sent), Toast.LENGTH_SHORT).show();
+
+                    }
+                }).execute(request);
                  //fin
             }
         });
 
-        takePicture.setOnClickListener(new View.OnClickListener() {
+        imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //debut
