@@ -153,14 +153,13 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         ((TextView) findViewById(R.id.txt_type)).setText(typeString);
         ((TextView) findViewById(R.id.txt_description)).setText(description);
         ((TextView) findViewById(R.id.txt_position)).setText(position.latitude + ":\n" + position.longitude);
-        ((TextView) findViewById(R.id.txt_user)).setText(user_id + " ");
-
+        textView = ((TextView) findViewById(R.id.txt_user));
 
 
         new User(new OnDataReceivedListener() {
 	        @Override
 	        public void OnDataReceived(String data) {
-	        	textView.setText(textView.getText() + "Émis par " + data);
+	        	textView.setText(textView.getText() + data);
 	        }
         }).execute(user_id);
 
