@@ -1,9 +1,15 @@
 package com.example.hackatown;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
@@ -14,6 +20,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,6 +52,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
+import android.app.AlertDialog;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -53,31 +63,55 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location mLastKnownLocation;
 
+    private boolean location;
+
+    private void requestLocation() {
+	    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+    }
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    	location = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+		if (location) {
+			getDeviceLocation();
+			Toast.makeText(getApplicationContext(), "Have fun!", Toast.LENGTH_SHORT).show();
+		}
+		else
+			new AlertDialog.Builder(this)
+				.setTitle("Permission denied")
+				.setMessage("You will not be able to access to your position and add an event.")
+				.setCancelable(true)
+				.setNegativeButton("OK", null)
+				.create().show();
+	}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        requestLocation();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
-
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MapsActivity.this, EventsCreatorActivity.class);
-                        getDeviceLocation();
-                        String locationString = mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude();
-                        intent.putExtra("position", locationString);
-                        startActivity(intent);
-
+                    	if (location) {
+		                    Intent intent = new Intent(MapsActivity.this, EventsCreatorActivity.class);
+		                    getDeviceLocation();
+		                    String locationString = mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude();
+		                    intent.putExtra("position", locationString);
+		                    startActivity(intent);
+	                    } else requestLocation();
                     }
                 }
         );
@@ -88,7 +122,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void refresh() {
-        checkPermission();
         GetData getData = new GetData(new OnDataReceivedListener() {
             @Override
             public void OnDataReceived(String data) {
@@ -148,9 +181,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         // Set the map's camera position to the current location of the device.
                         mLastKnownLocation = (Location) task.getResult();
                     }
-                    else
-                    {
-                    }
                 }
             });
         } catch (SecurityException e)
@@ -173,8 +203,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setPadding(0, getSupportActionBar().getHeight(),0, 0);
-
-        checkPermission();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -204,76 +232,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(45.50884, -73.58781), 10));
         refresh();
 
-    }
-
-    public void checkPermission(){
-        Log.d("POLY", "checkPermission: ");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-
-        // Permission is not granted
-        // Should we show an explanation?
-        {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) &&
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-            {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            }
-            else
-            {
-                // No explanation needed; request the permission
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                            0);
-                }
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                        0);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-        else
-        {
-            // Permission has already been granted
-            mMap.setMyLocationEnabled(true);
-        }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (permissions.length == 1 &&
-                permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            else
-            {
-                mMap.setMyLocationEnabled(true);
-
-            }
-        }
-        else
-        {
-            // Permission was denied. Display an error message.
-        }
     }
 
     @Override
