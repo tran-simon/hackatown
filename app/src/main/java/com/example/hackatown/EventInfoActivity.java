@@ -188,13 +188,13 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         position = new LatLng(Double.parseDouble(positionStrings[0]), Double.parseDouble(positionStrings[1]));
 
 
-        textView.setText("Date: " + date + "\nDescription: " + description + "\nPosition (lat, long): (" + position.latitude + ":" + position.longitude + ")\nUser: " + user_id);
+        textView.setText("Date: " + date + "\nType: " + type + "\nDescription: " + description + "\nPosition (lat, long): (" + position.latitude + ":" + position.longitude + ")\nUser: " + user_id);
 
 
         URL url2 = null;
         try
         {
-            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".png");
+            url2 = new URL("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg");
         } catch (MalformedURLException e)
         {
             e.printStackTrace();

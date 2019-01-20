@@ -71,8 +71,6 @@ public class EventCreatorPart2 extends AppCompatActivity {
                 Date todaysDate = new Date();
                 int userId = 1;
                 Request request = new Request( typeDeRequest, description, location, todaysDate, userId);
-                Log.d("POLY", "Creation dune request:");
-                Log.d("POLY",  "Type : " +typeDeRequest + ", Description : " + description + ", Position : (" + location.latitude + ":" + location.longitude + "), Date: " + todaysDate);
                  //fin
             }
         });
