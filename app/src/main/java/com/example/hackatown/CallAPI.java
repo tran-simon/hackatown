@@ -2,21 +2,12 @@ package com.example.hackatown;
 
 import android.os.AsyncTask;
 import android.os.Environment;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
-public class CallAPI extends AsyncTask<Request, String, Boolean>
+public class CallAPI extends AsyncTask<Request, String, String>
 {
 
 	public CallAPI(){
@@ -31,7 +22,7 @@ public class CallAPI extends AsyncTask<Request, String, Boolean>
 	// https://stackoverflow.com/a/2938787
 	// https://stackoverflow.com/a/16450705
 	@Override
-	protected Boolean doInBackground(final Request... params) {
+	protected String doInBackground(final Request... params) {
 		String urlString     = "https://dev.concati.me/data";
 		String fileName      = "image.png";
 		String lineEnd       = "\r\n";
@@ -41,16 +32,16 @@ public class CallAPI extends AsyncTask<Request, String, Boolean>
 		File   sourceFile    = new File(sourceFileUri);
 		int maxBufferSize = 1024*1024;
 
-
+		System.out.println("HERE");
 		try {
 			URL               url           = new URL(urlString);
-			FileInputStream fileInputStream = new FileInputStream(
-					sourceFile);
+			FileInputStream fileInputStream = new FileInputStream(sourceFile);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setDoInput(true); // Allow Inputs
 			conn.setDoOutput(true); // Allow Outputs
 			conn.setUseCaches(false); // Don't use cache
+			System.out.println("NONONONO");
 
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Connection", "Keep-Alive");
@@ -59,8 +50,36 @@ public class CallAPI extends AsyncTask<Request, String, Boolean>
 			conn.setRequestProperty("image", fileName);
 
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+			//DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+			//BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+			System.out.println("NONONONO");
 
-			dos = new DataOutputStream(conn.getOutputStream());
+			dos.writeBytes(twoHyphens + boundary + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"type\"" + lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(Integer.toString(params[0].getType().ordinal()));
+			dos.writeBytes(lineEnd);
+
+			dos.writeBytes(twoHyphens + boundary + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"position\"" + lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(Double.toString(params[0].getPosition().latitude));
+			dos.writeBytes(",");
+			dos.writeBytes(Double.toString(params[0].getPosition().longitude));
+			dos.writeBytes(lineEnd);
+
+			dos.writeBytes(twoHyphens + boundary + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"description\"" + lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(params[0].getDescription());
+			dos.writeBytes(lineEnd);
+
+			dos.writeBytes(twoHyphens + boundary + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"user_id\"" + lineEnd);
+			dos.writeBytes(lineEnd);
+			dos.writeBytes(Integer.toString(params[0].getUserID()));
+			dos.writeBytes(lineEnd);
+
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
 			dos.writeBytes("Content-Disposition: form-data; name=\"image\"; filename=\"" + fileName + "\"" + lineEnd);
 			//dos.writeBytes("Content-Type: image/jpeg" + lineEnd);
@@ -91,25 +110,26 @@ public class CallAPI extends AsyncTask<Request, String, Boolean>
 			// send multipart form data necesssary after file
 			// data...
 			dos.writeBytes(lineEnd);
-			dos.writeBytes(twoHyphens + boundary + twoHyphens
-					+ lineEnd);
+			dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
 			// close the streams //
 			fileInputStream.close();
+			//dos.writeBytes(params[0].xWwwFormUrlencoded());
 			dos.flush();
 			dos.close();
 
-			//dos.writeBytes(params[0].xWwwFormUrlencoded());
 			//dos.flush();
 			//dos.close();
+			System.out.println("NONONONO");
 			conn.connect();
-			System.out.println("MESSAGE DE RETOUR: " + new BufferedReader(new InputStreamReader((conn.getErrorStream()))).readLine());
-
+			//System.out.println("MESSAGE DE RETOUR: " + new BufferedReader(new InputStreamReader((conn.getErrorStream()))).readLine());
+			String s = new BufferedReader(new InputStreamReader((conn.getInputStream()))).readLine();
+			if (s!= null && !s.isEmpty())
+				return s;
 		} catch (Exception e) {
 			System.out.println("OOPS");
-			System.out.println(e.getMessage());
-			return false;
+			e.printStackTrace();
 		}
-		return true;
+		return "";
 	}
 }

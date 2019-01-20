@@ -42,6 +42,14 @@ public class Request
         return description;
     }
 
+    public LatLng getPosition() {
+    	return position;
+    }
+
+    public int getUserID() {
+    	return user_id;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

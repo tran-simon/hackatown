@@ -84,7 +84,7 @@ class UploadFileAsync extends AsyncTask<String, Void, String>
 					dos.close();
 
 				} catch (Exception e) {
-
+					System.out.println("ERRRRRR");
 					// dialog.dismiss();
 					e.printStackTrace();
 
@@ -96,6 +96,7 @@ class UploadFileAsync extends AsyncTask<String, Void, String>
 
 		} catch (Exception ex) {
 			// dialog.dismiss();
+			System.out.println("ERRRRRR");
 
 			ex.printStackTrace();
 		}
