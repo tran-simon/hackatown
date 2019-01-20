@@ -1,6 +1,9 @@
 package com.example.hackatown;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +19,17 @@ public class MainActivity extends AppCompatActivity {
         //test
         super.onCreate(savedInstanceState);
 
-        Request rr = new Request(Request.EventType.FeuxCiruculation,"das", new LatLng(4, 5), new Date(), 3);
-		System.out.println("YEEEEEEE");
-        System.out.println(rr.xWwwFormUrlencoded());
+	    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+	    if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+		    Request rr = new Request(Request.EventType.FeuxCiruculation, "das", new LatLng(4, 5), new Date(), 3);
+		    System.out.println("YEEEEEEE");
+
+		    new CallAPI().execute(rr);
+	    } else {
+		    System.out.println("NO PERMISSION");
+	    }
+	   // System.out.println(rr.xWwwFormUrlencoded());
 
         setContentView(R.layout.activity_main);
 

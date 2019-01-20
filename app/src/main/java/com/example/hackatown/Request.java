@@ -63,6 +63,7 @@ public class Request
     }
 
     String xWwwFormUrlencoded() {
+    	//https://stackoverflow.com/a/8129350
 	    return String.format(Locale.US, "type=%d&date=%d&position=%f,%f&description=%s&user_id=%d",
 			    type.ordinal(), date.getTime(), position.latitude, position.longitude, description, user_id);
     }
