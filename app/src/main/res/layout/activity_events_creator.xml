@@ -12,16 +12,119 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <Button
-                android:id="@+id/button_traffic_light"
+                android:id="@+id/button_feu_circulation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Test"
+                android:drawableLeft="@drawable/icon_feu_circulation"
+                android:text="Feu de circulation"
                 android:paddingLeft="16dp"
                 android:drawablePadding="8dp"
-                android:gravity="left|center_vertical" />
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_panneau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Panneau de signalisation"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_nom_rue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Panneau de nom de rue"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_deneigement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_deneigement"
+                android:text="Déneigement"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_nid_poule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Nid de poule"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_poubelle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_poubelle"
+                android:text="Poubelle/Récupération remplie"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_stationnement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Stationnement illégal"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_lampadaire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Lampadaire"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_infrastructure_sportive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Infrastructure sportive"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
+            <Button
+                android:id="@+id/button_autre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_warning_black_24dp"
+                android:text="Autre"
+                android:paddingLeft="16dp"
+                android:drawablePadding="8dp"
+                android:gravity="left|center_vertical"
+                android:background="#ffffff"/>
+
         </LinearLayout>
     </ScrollView>
 

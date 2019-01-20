@@ -19,7 +19,6 @@
         <activity android:name=".EventCreatorPart2"></activity>
         <activity android:name=".EventsCreatorActivity" />
 
-
 	    <!-- https://stackoverflow.com/a/50779232 -->
 	    <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
@@ -49,6 +48,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".EventsCreatorActivity">
+
         </activity>
     </application>
 
