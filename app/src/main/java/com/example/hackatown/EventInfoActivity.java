@@ -200,13 +200,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
         textView.setTypeface(Typeface.DEFAULT_BOLD);
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
-        /*ImageDownload imageDownload = new ImageDownload(imageView, new OnDataReceivedListener() {
-            @Override
-            public void OnDataReceived(String data) {
-                findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
-            }
-        });
-        imageDownload.execute(url2);*/
+
+
 
 
     }
