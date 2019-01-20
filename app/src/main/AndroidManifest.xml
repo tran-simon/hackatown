@@ -35,6 +35,7 @@
 		</provider>
 
 
+
 	    <activity
 			    android:name=".EventInfoActivity"
 			    android:label="@string/title_activity_event_info"
@@ -44,11 +45,6 @@
 
 		<!-- https://stackoverflow.com/a/50779232 -->
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
-
-		<activity
-			android:name=".EventInfoActivity"
-			android:label="@string/title_activity_event_info"
-			android:theme="@style/AppTheme.NoActionBar"/>
 
 		<!--
              The API key for Google Maps-based APIs is defined as a string resource.
