@@ -44,32 +44,42 @@ public class Marker {
 
     }
     public void initIcon(){
-        int iconID = R.mipmap.ic_warning;
+        int iconID = R.mipmap.icon_deneigement_round;
         switch (type)
         {
             case FeuxCiruculation:
+                iconID = R.mipmap.icon_traffic_light;
                 break;
             case PanneauxSiganlisation:
+                iconID = R.mipmap.icon_signalisation;
                 break;
             case PanneauxRue:
+                iconID = R.mipmap.icon_paneaux_rue;
                 break;
             case Deneigement:
+                iconID = R.mipmap.icon_deneigement_round;
                 break;
             case NidDePoule:
+                iconID = R.mipmap.icon_nid_poule;
                 break;
             case PoubelleRecup:
+                iconID = R.mipmap.icon_poubelle;
                 break;
             case Stationnement:
+                iconID = R.mipmap.icon_stationnement;
                 break;
             case AbrisBus:
+                iconID = R.mipmap.icon_abribus;
                 break;
             case Lampadaire:
+                iconID = R.mipmap.icon_lampadaire;
                 break;
             case InfSport:
+                iconID = R.mipmap.icon_inf_sport;
                 break;
 
             case Autre: default:
-            iconID = R.mipmap.ic_warning;
+            iconID = R.mipmap.icon_autre;
             break;
         }
 
