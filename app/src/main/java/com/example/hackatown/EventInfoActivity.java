@@ -162,7 +162,7 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
 	        public void OnDataReceived(String data) {
 	        	textView.setText(textView.getText() + "Émis par " + data);
 	        }
-        }).execute(id);
+        }).execute(user_id);
 
 	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").into(imageView);
 
