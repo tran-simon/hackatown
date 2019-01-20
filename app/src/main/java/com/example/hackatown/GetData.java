@@ -1,7 +1,5 @@
 package com.example.hackatown;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
