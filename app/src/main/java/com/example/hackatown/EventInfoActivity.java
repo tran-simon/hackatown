@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,7 +162,8 @@ public class EventInfoActivity extends AppCompatActivity implements OnDataReceiv
 	        }
         }).execute(user_id);
 
-	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg").fitCenter().into(imageView);
+	    GlideApp.with(this).load("https://dev.concati.me/uploads/" + objectInfo.getInt("id") + ".jpg")
+			    .signature(new ObjectKey(String.valueOf(System.currentTimeMillis()))).fitCenter().into(imageView);
     }
 
 
